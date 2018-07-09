@@ -1,0 +1,4 @@
+This version are first at all and with many bugs
+Note: i not changed .ini and .cfg name of zombie_plague_advance to zombie_plague_special yet
+
+Note 2: Need Download Resources for test
