@@ -1,0 +1,399 @@
+[en]
+NOTICE_INFO1 = Press M to show the game menu
+NOTICE_INFO2 = Press , or . to purchase ammo
+NOTICE_VIRUS_FREE = The T-Virus has been set loose...
+NOTICE_FIRST = %s is the first zombie !!!
+NOTICE_INFECT = %s's brains has been eaten...
+NOTICE_INFECT2 = %s's brains has been eaten by %s...
+NOTICE_ANTIDOTE = %s has used an antidote...
+NOTICE_NEMESIS = %s is a Nemesis !!!
+NOTICE_SURVIVOR = %s is a Survivor !!!
+NOTICE_SWARM = Swarm Mode !!!
+NOTICE_MULTI = Multiple Infection !!!
+NOTICE_PLAGUE = Plague Mode !!!
+NOTICE_SNIPER = %s is a Sniper !!!
+NOTICE_ASSASSIN = %s is an Assassin !!!
+NOTICE_PREDATOR = %s is an Predator !!!
+NOTICE_BOMBARDIER = %s is an Bombardier !!!
+NOTICE_WESKER = %s is an Wesker !!!
+NOTICE_BERSERKER = %s is an Berserker!!!
+NOTICE_SPY = %s is an Spy!!!
+NOTICE_DRAGON = %s is an Dragon !!!
+NOTICE_LNJ = Armageddon Mode !!!
+
+WIN_HUMAN = Humans defeated the plague!
+WIN_ZOMBIE = Zombies have taken over the world!
+WIN_NO_ONE = No one won...
+WIN_HUMAN_SURVIVE = Humans survived the plague!
+
+CMD_INFECT = turned into a Zombie
+CMD_DISINFECT = turned back to Human
+CMD_NEMESIS = turned into a Nemesis
+CMD_SURVIVAL = turned into a Survivor
+CMD_ASSASSIN = turned into an Assassin
+CMD_PREDATOR = turned into an Predator
+CMD_BOMBARDIER = turned into an Bombardier
+CMD_BERSERKER = turned into an Berserker
+CMD_WESKER = turned into an Wesker
+CMD_SPY = turned into an Spy
+CMD_DRAGON = turned into an Dragon
+CMD_SWARM = start Swarm Mode
+CMD_MULTI = start Multiple Infection
+CMD_PLAGUE = start Plague Mode
+CMD_SNIPER = turned into a Sniper
+CMD_LNJ = start Armageddon Mode
+CMD_RESPAWN = respawned
+CMD_NOT = Unavailable command.
+CMD_ZOMBIE_ONLY = This is only available to zombies.
+CMD_HUMAN_ONLY = This is only available to humans.
+CMD_NOT_STUCK = You are not stuck.
+CMD_NOT_ACCESS = You have no access.
+CMD_NOT_CANTUSE = You can't use this right now.
+CMD_NOT_EXTRAS = Extra Items are disabled.
+CMD_NOT_GAME_MODES = Custom game modes are disabled
+CMD_NOT_ZCLASSES = Zombie Classes are disabled.
+CMD_NOT_CUSTOM_SP = Custom Special Classes are disabled.
+CMD_HAVE_ITEM = You have alterady this item.
+CMD_CUSTOM_SP = turned into a %s
+
+MOTD_ENABLED = Enabled
+MOTD_DISABLED = Disabled
+
+MENU_BUY = Buy Weapons
+MENU_EXTRABUY = Buy Extra Items
+MENU_ZCLASS = Choose Zombie Class
+MENU_UNSTUCK = Unstuck
+MENU_ADMIN_CUSTOM = Start Custom Modes Menu
+MENU_ADMIN = Change Class
+MENU2_ADMIN = Start Modes Menu
+MENU3_ADMIN = Admin Menu
+MENU_INFO = Help
+MENU_SPECTATOR = Join Spectators
+
+MENU_BUY1_TITLE = Primary Weapon
+MENU_BUY2_TITLE = Secondary Weapon
+MENU_ZCLASS_TITLE = Zombie Class
+MENU_EXTRA_TITLE = Extra Items
+MENU_ADMIN_CUSTOM_TITLE = Choose A Custom Mode To Start
+MENU_ADMIN_TITLE = Change Class
+MENU2_ADMIN_TITLE = Choose A Mode To Start
+MENU3_ADMIN_TITLE = Admin Menu
+MENU_INFO_TITLE = Plugin Information
+MENU_ADMIN_CUSTOM_SP_H = Make Custom Special \y(Human)
+MENU_ADMIN_CUSTOM_SP_Z = Make Custom Special \r(Zombie)
+
+MENU_EXTRA1 = NightVision (single round)
+MENU_EXTRA2 = T-Virus Antidote
+MENU_EXTRA3 = Zombie Madness
+MENU_EXTRA4 = Infection Bomb
+MENU_ADMIN1_CUSTOM = Start
+MENU_ADMIN2_CUSTOM = start
+MENU_ADMIN1 = Make Zombie/Human
+MENU_ADMIN2 = Make Nemesis
+MENU_ADMIN3 = Make Survivor
+MENU_ADMIN4 = Respawn Someone
+MENU_ADMIN5 = Start Swarm Mode
+MENU_ADMIN6 = Start Multiple Infection
+MENU_ADMIN7 = Start Plague Mode
+MENU_ADMIN8 = Make Sniper
+MENU_ADMIN9 = Make Assassin
+MENU_ADMIN10 = Start Armageddon Mode
+MENU_ADMIN11 = Make Predator
+MENU_ADMIN12 = Make Bombardier
+MENU_ADMIN13 = Make Berserker
+MENU_ADMIN14 = Make Wesker
+MENU_ADMIN15 = Make Spy
+MENU_ADMIN16 = Make Dragon
+MENU_MAKE_CUSTOM_SP = Make %s
+
+MENU_AUTOSELECT = Remember Selection
+MENU_BACK = Back
+MENU_NEXT = Next
+MENU_EXIT = Exit
+
+ZOMBIE_ATTRIB1 = Health
+ZOMBIE_ATTRIB2 = Speed
+ZOMBIE_ATTRIB3 = Gravity
+ZOMBIE_ATTRIB4 = Knockback
+ZOMBIE_ATTRIB5 = Armor
+ZOMBIE_ATTRIB6 = Mode
+ZOMBIE_ATTRIB7 = Frags
+ZOMBIE_ATTRIB8 = Deaths
+
+CURRENT_MODE = Current Mode
+MODE_NONE = Wait From Infection!
+MODE_INFECTION = Infection
+MODE_SWARM = Swarm
+MODE_MULTI = Multi-Infection
+MODE_PLAGUE = Plague
+MODE_LNJ = Armaggedom
+MODE_UNDEFNIED = Undefined
+ROUND_ENDED = Round Ended!
+
+CLASS_CLASS = Class:
+CLASS_HUMAN = Human
+CLASS_ZOMBIE = Zombie
+CLASS_NEMESIS = Nemesis
+CLASS_ASSASSIN = Assassin
+CLASS_SURVIVOR = Survivor
+CLASS_SNIPER = Sniper
+CLASS_PREDATOR = Predator
+CLASS_BOMBARDIER = Bombardier
+CLASS_BERSERKER = Berserker
+CLASS_WESKER = Wesker
+CLASS_SPY = Spy
+CLASS_DRAGON = Dragon
+
+ARMOR = Armor:
+LAST_ZOMBIE_LEFT = The last zombie has left, %s is the new zombie.
+LAST_HUMAN_LEFT = The last human has left, %s is the new human.
+NOT_ENOUGH_AMMO = You dont have enough ammo packs.
+AMMO_BOUGHT = You purchased extra ammo for your guns.
+ZOMBIE_SELECT = Your zombie class after the next infection will be
+BUY_ENABLED = Your buy menu has been re-enabled.
+AMMO_PACKS1 = Ammo packs:
+AMMO_PACKS2 = ammo packs
+SPECTATING = Spectating:
+AIM_INFO = %s^n[ %s | Health: %d | Armor: %d | Ammo Packs: %d ]
+
+WAIT_ROUND_BEGINS = Wait Round Begins...
+MENU_PERSONAL_OPTIONS = User Configs
+
+ANTIDOTE_NOT_AVALIABLE1 = Antidote is available when have !t%d!y zombies on minimum
+
+MENU_PERSONAL_TITLE = \r[\dZP\r] \wUser Configs:
+MENU_PERSONAL_ITEM1 = \wHud Configs
+MENU_PERSONAL_ITEM2 = \wNightvision Configs
+MENU_PERSONAL_ITEM3 = \wFlashlight Color
+
+MENU_HUD_TITLE = \r[\dZP\r] \wHud Configs:
+MENU_HUD_ITEM1 = \wChange Hud Type
+MENU_HUD_ITEM2 = \wChange Hud Color \y[Humanos]
+MENU_HUD_ITEM3 = \wChange Hud Color \r[Zombies]
+
+MENU_CHOOSE_HUD_COLOR_TITLE1 = \r[\dZP\r] \wChange Hud Color \r[Zombies]\w:
+MENU_CHOOSE_HUD_COLOR_TITLE2 = \r[\dZP\r] \wChange Hud Color \y[Humano]\w:
+
+MENU_HUD_TYPE_TITLE = \r[\dZP\r] \wChange Hud Type:
+MENU_HUD_TYPE_ITEM1 = \wNormal
+MENU_HUD_TYPE_ITEM2 = \wClassic
+MENU_HUD_TYPE_ITEM3 = \wCenter
+MENU_HUD_TYPE_ITEM4 = \wAnthRax Style
+
+MENU_CHOOSE_FLASH_COLOR_TITLE = \r[\dZP\r] \wFlashlight Color:
+
+MENU_NVISION_CONFIG_TITLE = \r[\dZP\r] \wNightvision Configs:
+MENU_NVISION_ITEM1 = \wChoose Nightvision Color \r[Zombies]
+MENU_NVISION_ITEM2 = \wChoose Nightvision Color \y[Humanos]
+MENU_NVISION_COLOR_TITLE1 = \r[\dZP\r] \wChoose Nightvision Color \y[Humano]\w:
+MENU_NVISION_COLOR_TITLE2 = \r[\dZP\r] \wChoose Nightvision Color \r[Zombie]\w:
+
+MENU_PERSONAL_COLOR1 = \wWhite
+MENU_PERSONAL_COLOR2 = \wRed
+MENU_PERSONAL_COLOR3 = \wGreen
+MENU_PERSONAL_COLOR4 = \wBlue
+MENU_PERSONAL_COLOR5 = \wCyan
+MENU_PERSONAL_COLOR6 = \wPink
+MENU_PERSONAL_COLOR7 = \wYellow
+
+DRAGON_INFO = Press !g[R]!y to Use Hability!, Hold !g[Jump]!y to fly!
+
+[bp]
+NOTICE_INFO1 = Press M Para Exibir o Menu
+NOTICE_INFO2 = Press , or . to purchase ammo
+NOTICE_VIRUS_FREE = O T-Virus esta a solta...
+NOTICE_FIRST = %s Eh o Primeiro Zombie!!!
+NOTICE_INFECT = %s Teve Seu Cerebro Comido...
+NOTICE_INFECT2 = %s Foi Infectado Por %s...
+NOTICE_ANTIDOTE = %s Usou antidoto...
+NOTICE_NEMESIS = %s Eh o Nemesis !!!
+NOTICE_SURVIVOR = %s Eh o Survivor !!!
+NOTICE_SWARM = Modo Swarm !!!
+NOTICE_MULTI = Modo Multi-Infeccao !!!
+NOTICE_PLAGUE = Modo Plague !!!
+NOTICE_SNIPER = %s Eh o Sniper !!!
+NOTICE_ASSASSIN = %s Eh o Assassino !!!
+NOTICE_PREDATOR = %s Eh o Predator !!!
+NOTICE_BOMBARDIER = %s Eh o Bombardier !!!
+NOTICE_WESKER = %s Eh o Wesker !!!
+NOTICE_BERSERKER = %s Eh o Berserker!!!
+NOTICE_SPY = %s Eh o Spy!!!
+NOTICE_DRAGON = %s Eh o Dragon !!!
+NOTICE_LNJ = Modo Armageddon !!!
+
+WIN_HUMAN = Humanos deteram a Praga!
+WIN_ZOMBIE = Zombies Dominaram o mundo!
+WIN_NO_ONE = Ninguem Ganhou...
+WIN_HUMAN_SURVIVE = Humanos sobreviveram a Praga!
+
+CMD_INFECT = Foi Convertido a Zombie
+CMD_DISINFECT = Foi Convertido a Humano
+CMD_NEMESIS = Foi Convertido a Nemesis
+CMD_SURVIVAL = Foi Convertido a Survivor
+CMD_ASSASSIN = Foi Convertido a Assassin
+CMD_PREDATOR = Foi Convertido a Predator
+CMD_BOMBARDIER = Foi Convertido a Bombardier
+CMD_DRAGON = Foi Convertido a Dragon
+CMD_BERSERKER = Foi Convertido a Berserker
+CMD_WESKER = Foi Convertido a Wesker
+CMD_SPY = Foi Convertido a Spy
+CMD_SWARM = Iniciar Modo Swarm
+CMD_MULTI = Iniciar Modo Multi-Infeccao
+CMD_PLAGUE = Iniciar Modo Plague
+CMD_SNIPER = Foi Convertido a Sniper
+CMD_LNJ = Iniciar Modo Armageddon
+CMD_RESPAWN = Revivido
+CMD_NOT = Comando Invalido.
+CMD_ZOMBIE_ONLY = Comando Somente disponivel para Zombies.
+CMD_HUMAN_ONLY = Comando Somente disponivel para Humanos.
+CMD_NOT_STUCK = Voce nao esta travado.
+CMD_NOT_ACCESS = Voce nao tem acesso.
+CMD_NOT_CANTUSE = Voce nao Pode usar isso Agora.
+CMD_NOT_EXTRAS = Itens Extras Desligados.
+CMD_NOT_GAME_MODES = Modos Custonomizados Desligados.
+CMD_NOT_ZCLASSES = Classes de Zombie Desligado.
+CMD_NOT_CUSTOM_SP = Classes Especiais Custonomizdas Desligados.
+CMD_HAVE_ITEM = Voce Ja Tem esse Item.
+CMD_CUSTOM_SP = Foi Convertido a %s
+
+MOTD_ENABLED = Ligado
+MOTD_DISABLED = Desligado
+
+WAIT_ROUND_BEGINS = Espere o Round Comecar...
+ROUND_ENDED = Acabou a partida!
+MENU_PERSONAL_OPTIONS = Opcoes Pessoais
+
+MENU_BUY = Comprar Armas
+MENU_EXTRABUY = Comprar Itens Extras
+MENU_ZCLASS = Escolher Classe de Zombie
+MENU_UNSTUCK = Destravar
+MENU_ADMIN_CUSTOM = Iniciar Modos Custonomizados
+MENU_ADMIN = Mudar Classe de jogador
+MENU2_ADMIN = Menu de Iniciar Modos
+MENU3_ADMIN = Menu de Adm
+MENU_INFO = Ajuda
+MENU_SPECTATOR = Ir para specator
+MENU_ADMIN_CUSTOM_SP_H = Converter a Humano Especial Custonomizado
+MENU_ADMIN_CUSTOM_SP_Z = Converter a Zombie Especial Custonomizado
+
+MENU_BUY1_TITLE = Arma Primaria
+MENU_BUY2_TITLE = Arma Secundaria
+MENU_ZCLASS_TITLE = Escolher Classe de Zombie
+MENU_EXTRA_TITLE = Itens Extras
+MENU_ADMIN_CUSTOM_TITLE = Iniciar Modo Custonomizado
+MENU_ADMIN_TITLE = Mudar Classe de jogador
+MENU2_ADMIN_TITLE = Iniciar Modo
+MENU3_ADMIN_TITLE = Menu De Adm
+MENU_INFO_TITLE = Informacao do plugin
+
+MENU_EXTRA1 = NightVision \r[Um Round]
+MENU_EXTRA2 = Antidoto
+MENU_EXTRA3 = Furia
+MENU_EXTRA4 = Bomba de Infeccao
+MENU_ADMIN1_CUSTOM = Iniciar
+MENU_ADMIN2_CUSTOM = Iniciar
+MENU_ADMIN1 = Converter para Zombie/Humano
+MENU_ADMIN2 = Converter para Nemesis
+MENU_ADMIN3 = Converter para Survivor
+MENU_ADMIN4 = Reviver um Jogador
+MENU_ADMIN5 = Iniciar Modo Swarm
+MENU_ADMIN6 = Iniciar Modo Multi-Infeccao
+MENU_ADMIN7 = Iniciar Modo Plague
+MENU_ADMIN8 = Converter para Sniper
+MENU_ADMIN9 = Converter para Assassino
+MENU_ADMIN10 = Iniciar Modo Armageddon
+MENU_ADMIN11 = Converter para Predator
+MENU_ADMIN12 = Converter para Bombardier
+MENU_ADMIN13 = Converter para Berserker
+MENU_ADMIN14 = Converter para Wesker
+MENU_ADMIN15 = Converter para Spy
+MENU_ADMIN16 = Converter para Dragon
+MENU_MAKE_CUSTOM_SP = Converter Para %s
+
+MENU_AUTOSELECT = Salvar Selecao
+MENU_BACK = Voltar
+MENU_NEXT = Proximo
+MENU_EXIT = Sair
+
+ZOMBIE_ATTRIB1 = Vida
+ZOMBIE_ATTRIB2 = Velocidade
+ZOMBIE_ATTRIB3 = Gravidade
+ZOMBIE_ATTRIB4 = Impacto
+ZOMBIE_ATTRIB5 = Colete
+ZOMBIE_ATTRIB6 = Modo
+ZOMBIE_ATTRIB7 = Frags
+ZOMBIE_ATTRIB8 = Mortes
+
+CURRENT_MODE = Modo Atual
+MODE_NONE = T-Virus a Solta!
+MODE_INFECTION = Infection
+MODE_SWARM = Swarm
+MODE_MULTI = Multi-Infection
+MODE_PLAGUE = Plague
+MODE_LNJ = Armaggedom
+MODE_UNDEFNIED = Indefenido
+
+CLASS_CLASS = Classe:
+CLASS_HUMAN = Humano
+CLASS_ZOMBIE = Zombie
+CLASS_NEMESIS = Nemesis
+CLASS_ASSASSIN = Assassino
+CLASS_SURVIVOR = Survivor
+CLASS_SNIPER = Sniper
+CLASS_PREDATOR = Predator
+CLASS_BOMBARDIER = Bombardier
+CLASS_BERSERKER = Berserker
+CLASS_WESKER = Wesker
+CLASS_SPY = Spy
+CLASS_DRAGON = Dragon
+
+ARMOR = Colete:
+LAST_ZOMBIE_LEFT = O Ultimo Zombie saiu do jogo, %s Eh o novo Zombie.
+LAST_HUMAN_LEFT = O Ultimo Humano saiu do jogo, %s Eh o novo Humano.
+NOT_ENOUGH_AMMO = Voce nao tem ammo packs suficiente.
+AMMO_BOUGHT = Voce comprou municao para suas armas.
+ZOMBIE_SELECT = Sua classe de zombie na proxima infeccao sera
+BUY_ENABLED = Seu Menu De Armas Foi reabilitado.
+AMMO_PACKS1 = Ammo packs:
+AMMO_PACKS2 = ammo packs
+SPECTATING = Telando:
+AIM_INFO = %s^n[ %s | Vida: %d | Colete: %d | Ammo Packs: %d ]
+
+ANTIDOTE_NOT_AVALIABLE1 = Tem que ter no minimo !t%d!y Zombies Para usar Antidoto
+
+MENU_PERSONAL_TITLE = \r[\dZP\r] \wConfiguracoes do Jogador:
+MENU_PERSONAL_ITEM1 = \wConfiguracoes da Hud
+MENU_PERSONAL_ITEM2 = \wConfiguracoes da Nightvision
+MENU_PERSONAL_ITEM3 = \wCor da Lanterna
+
+MENU_HUD_TITLE = \r[\dZP\r] \wConfiguracoes da Hud:
+MENU_HUD_ITEM1 = \wMudar o Tipo de Hud
+MENU_HUD_ITEM2 = \wMudar a Cor da Hud \y[Humanos]
+MENU_HUD_ITEM3 = \wMudar a Cor da Hud \r[Zombies]
+
+MENU_CHOOSE_HUD_COLOR_TITLE1 = \r[\dZP\r] \wCor da Hud \r[Zombies]\w:
+MENU_CHOOSE_HUD_COLOR_TITLE2 = \r[\dZP\r] \wCor da Hud \y[Humano]\w:
+
+MENU_HUD_TYPE_TITLE = \r[\dZP\r] \wTipo de Hud:
+MENU_HUD_TYPE_ITEM1 = \wNormal
+MENU_HUD_TYPE_ITEM2 = \wClassico
+MENU_HUD_TYPE_ITEM3 = \wCentralizado
+MENU_HUD_TYPE_ITEM4 = \wEstilo AnthRax
+
+MENU_CHOOSE_FLASH_COLOR_TITLE = \r[\dZP\r] \wCor da Lanterna:
+
+MENU_NVISION_CONFIG_TITLE = \r[\dZP\r] \wConfiguracoes da Nightvision:
+MENU_NVISION_ITEM1 = \wCor da Nightvision \r[Zombies]
+MENU_NVISION_ITEM2 = \wCor da Nightvision \y[Humanos]
+MENU_NVISION_COLOR_TITLE1 = \r[\dZP\r] \wCor da Nightvision \y[Humano]\w:
+MENU_NVISION_COLOR_TITLE2 = \r[\dZP\r] \wCor da Nightvision \r[Zombie]\w:
+
+MENU_PERSONAL_COLOR1 = \wBranco
+MENU_PERSONAL_COLOR2 = \wVermelho
+MENU_PERSONAL_COLOR3 = \wVerde
+MENU_PERSONAL_COLOR4 = \wAzul
+MENU_PERSONAL_COLOR5 = \wCiano
+MENU_PERSONAL_COLOR6 = \wRosa
+MENU_PERSONAL_COLOR7 = \wAmarelo
+
+DRAGON_INFO = Pressione !g[R]!y Para usar o poder!, Segure !g[Espaco]!y pra voar!
