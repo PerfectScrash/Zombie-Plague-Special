@@ -178,6 +178,7 @@ Change Log:
 	- .cfg update [Need Change for prevent possible bugs]
 	- Lang updated (For menu itens) [Need Change for prevent possible bugs]
 * 4.3 (Beta)
+	- Fixed Admin Flags (Bug only presents in 4.2 Version)
 	- Fixed Native: zp_get_special_class_id
 	- Fixed Native: zp_get_zombie_class_realname
 	- Fixed Native: zp_get_extra_item_realname
