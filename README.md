@@ -177,3 +177,17 @@ Change Log:
 	- Improved Code
 	- .cfg update [Need Change for prevent possible bugs]
 	- Lang updated (For menu itens) [Need Change for prevent possible bugs]
+* 4.3 (Beta)
+	- Fixed Native: zp_get_special_class_id
+	- Fixed Native: zp_get_zombie_class_realname
+	- Fixed Native: zp_get_extra_item_realname
+	- Fixed Native: zp_make_user_special
+	- Fixed Native: zp_get_gamemode_id
+	- Fixed Native: zp_get_extra_item_realname
+	- Fixed Native: zp_get_random_player
+	- Fixed Zombie armor damage.
+	- Removed Replace Chars when you register some item/class/gamemode/special class/weapon with [ or ] chars (Update your amx_settings_api for prevent bugs)
+	- Added Native: zp_start_game_mod(gameid)
+	- Added Native: zp_set_next_game_mode(gameid)
+	- Added Cvar: zp_zombie_idle_sound
+
