@@ -3,7 +3,7 @@
 #include <zombie_plague_special>
 
 #if ZPS_INC_VERSION < 43
-	#assert Zombie Plague Special 4.3 (Beta 2) Include File Required. Download Link: https://forums.alliedmods.net/showthread.php?t=260845
+	#assert Zombie Plague Special 4.3 (Beta 2) Include File Required. Download Link: https://github.com/PerfectScrash/Zombie-Plague-Special/tree/master/Version%204.3%20-%20Beta%202
 #endif
 
 #define PLUGIN  "[ZPSp 4.3 Beta 2] New Native of Extra Item Example"
