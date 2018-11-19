@@ -191,4 +191,10 @@ Change Log:
 	- Added Native: zp_start_game_mod(gameid)
 	- Added Native: zp_set_next_game_mode(gameid)
 	- Added Cvar: zp_zombie_idle_sound
+* 4.3 (Beta 2)
+	- Changed Native: zp_set_next_game_mode(gameid) to zp_set_next_game_mode(gameid, force_start = 0) [Use force start 1 for start gamemod after round begins]
+	- Added Separate Grenade Configuration (Can adding some effects without editing main plugin)
+	- Changed Swarm chossing player system to same system of multi infection (Before are chossing by Team now its randomly)
+	- Added Cvar: zp_swarm_ratio
+	- Added Native: zpsp_register_extra_item(const name[], cost, const teams[]) [For Creating extraitens for custom specials and other that you cant make because with compile error, see a example here: https://github.com/PerfectScrash/Zombie-Plague-Special/blob/master/Version%204.3%20-%20Beta%202/scripting/examples/zpsp_new_native_extraitem_example.sma]
 
