@@ -192,7 +192,7 @@ Change Log:
 	- Added Native: zp_set_next_game_mode(gameid)
 	- Added Cvar: zp_zombie_idle_sound
 * 4.3 (Beta 2)
-	- Changed Native: zp_set_next_game_mode(gameid) to zp_set_next_game_mode(gameid, force_start = 0) [Use force start 1 for start gamemod after round begins]
+	- Changed Native: zp_start_game_mod(gameid) to zp_start_game_mod(gameid, force_start = 0) [Use force start 1 for start gamemod after round begins]
 	- Added Separate Grenade Configuration (Can adding some effects without editing main plugin)
 	- Changed Swarm chossing player system to same system of multi infection (Before are chossing by Team now its randomly)
 	- Added Cvar: zp_swarm_ratio
