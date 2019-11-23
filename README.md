@@ -205,4 +205,13 @@ Change Log:
 	- Added Cvar "zp_ammopack_damage"
 	- Changed Native "zp_set_extra_damage"
 	- Fixed Native in include: "zp_get_special_class_name"
+	- Added New Stocks:
+		- Stock: zp_is_infection_round()
+		- Stock: zp_is_multi_infection_round()
+		- Stock: zp_is_custom_round()
+		- Stock: zp_is_armageddon_round()
+		- Stock: zp_get_alive_players()
+		- Stock: zp_play_sound(id, const sound[])
+		- Stock: zp_colored_print(target, with_tag, const message[], any:...)
+
 
