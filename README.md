@@ -197,4 +197,12 @@ Change Log:
 	- Changed Swarm chossing player system to same system of multi infection (Before are chossing by Team now its randomly)
 	- Added Cvar: zp_swarm_ratio
 	- Added Native: zpsp_register_extra_item(const name[], cost, const teams[]) [For Creating extraitens for custom specials and other that you cant make because with compile error, see a example here: https://github.com/PerfectScrash/Zombie-Plague-Special/blob/master/Version%204.3%20-%20Beta%202/scripting/examples/zpsp_new_native_extraitem_example.sma]
+* 4.4 Beta:
+	- Fixed Plague Mod
+	- Added ZP_CHAT_TAG in lang (You can change chat tag now) [Lang updated: update lang for prevent bugs]
+	- Fixed Server Crash when "zp_human_damage_reward"/"zp_zombie_damage_reward" are disable
+	- Now Ammo Pack by Damage dealth are now works like in zp 5.0
+	- Added Cvar "zp_ammopack_damage"
+	- Changed Native "zp_set_extra_damage"
+	- Fixed Native in include: "zp_get_special_class_name"
 
