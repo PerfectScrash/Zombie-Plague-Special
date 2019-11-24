@@ -631,11 +631,15 @@ native zp_override_user_model(id, const newmodel[], modelindex = 0)
 native zp_get_user_model(id, model[], len)
 
 
+#if AMXX_VERSION_NUM < 183
+native zp_set_extra_damage(victim, attacker, damage, weaponDescription[]) // Set User Extra Damage (Like Superhero Mod)
+#else
 /**
  * @deprecated This function are update your functions
  */ 
 #pragma deprecated Use zp_set_user_extra_damage(victim, attacker, damage, weaponDescription[], dmg_dealth = 0) instead.
 native zp_set_extra_damage(victim, attacker, damage, weaponDescription[]) // Set User Extra Damage (Like Superhero Mod)
+#endif
 
 
 // New Natives (3.0 Version or higher Available)
