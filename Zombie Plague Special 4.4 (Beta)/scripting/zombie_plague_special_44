@@ -211,6 +211,7 @@
 			- Added Cvar "zp_ammopack_damage"
 			- Changed Native "zp_set_extra_damage"
 			- Fixed Native in include: "zp_get_special_class_name"
+			- Fixed Trigger Hurt kill
 
 ============================================================================================================================*/
 /*================================================================================
@@ -2334,26 +2335,39 @@ public fw_PlayerKilled_Post(victim, attacker, shouldgib) { // Ham Player Killed 
 }
 
 public fw_TakeDamage(victim, inflictor, attacker, Float:damage, damage_type) { // Ham Take Damage Forward
-	// Block Trigger Hurt Kill Damage before Round Starts and when round end (Essentials for Escape Maps)
+	if(!is_user_valid_alive(victim))
+		return HAM_IGNORED;
+	
 	if(!is_user_valid_connected(attacker) && pev_valid(attacker)) {
-		static classname[32]; pev(attacker, pev_classname, classname, 31)
-		if(equal(classname, "trigger_hurt") && damage >= get_user_health(victim) && (g_newround || g_currentmode == MODE_NONE || g_endround)) {
+		static classname[32]; 
+		pev(attacker, pev_classname, classname, charsmax(classname));
+		if(damage >= get_user_health(victim) && equal(classname, "trigger_hurt")) {
+			if(g_endround)
+				return HAM_SUPERCEDE;
+
+			// Block Entity Kill Damage before Round Starts and when round end (Essentials for Escape Maps)
 			if((g_newround || g_currentmode == MODE_NONE) && !g_endround) { // Move to an initial spawn
 				if(get_pcvar_num(cvar_randspawn)) do_random_spawn(victim) // random spawn (including CSDM)
 				else do_random_spawn(victim, 1) // regular spawn
 			}
+			
+			// Fix entity kill bug
+			else user_kill(victim);
+			
 			return HAM_SUPERCEDE;
 		}
-		return HAM_IGNORED
+		return HAM_IGNORED;
 	}	
-	if(victim == attacker) return HAM_IGNORED; // Non-player damage or self damage
+
+	if(victim == attacker || !is_user_valid_connected(attacker)) return HAM_IGNORED; // Non-player damage or self damage
 	
 	// New round starting or round ended  / Victim shouldn't take damage or victim is frozen
 	if(g_newround || g_endround || g_currentmode == MODE_NONE || g_nodamage[victim] || (g_frozen[victim] && !(get_pcvar_num(cvar_frozenhit))))
 		return HAM_SUPERCEDE;
 	
 	// Prevent friendly fire
-	if(is_user_alive(attacker) && fm_cs_get_user_team(attacker) == fm_cs_get_user_team(victim)) return HAM_SUPERCEDE;
+	if(is_user_valid_alive(attacker) && fm_cs_get_user_team(attacker) == fm_cs_get_user_team(victim)) 
+		return HAM_SUPERCEDE;
 	
 	if(!g_zombie[attacker]) { // Attacker is human...
 		if(g_zm_special[victim] > 0 && g_hm_special[attacker] != SNIPER) { // Armor multiplier for the final damage on normal zombies
@@ -2422,6 +2436,8 @@ public fw_TakeDamage(victim, inflictor, attacker, Float:damage, damage_type) { /
 	return HAM_SUPERCEDE;
 }
 public fw_TakeDamage_Post(victim, inflictor, attacker, Float:damage, damage_type) { // Ham Take Damage Post Forward
+	if(!is_user_valid_alive(victim))
+		return;
 
 	// Damage Dealt (Now works like in zp 5.0)
 	if(damage_type & DMG_BULLET)
