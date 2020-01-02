@@ -2,16 +2,21 @@
 	Custom Zombie Special Class Example 
 	
 	See The Code for creating more specials zombies with powers 
+
+	4.4 Update:
+		Added "Alien Vision" on this example class
+		With Alien vision you can see Invisible Players (Like Spy and Predators)
 */
 
 
 #include <amxmodx>
 #include <hamsandwich>
+#include <fakemeta>
 #include <zombie_plague_special>
 #include <amx_settings_api>
 
 #if ZPS_INC_VERSION < 44
-	#assert Zombie Plague Special  4.4 (Beta) or Higher Include File Required. Download Link: https://forums.alliedmods.net/showthread.php?t=260845
+	#assert Zombie Plague Special 4.4 (Beta) or Higher Include File Required. Download Link: https://forums.alliedmods.net/showthread.php?t=260845
 #endif
 
 new const ZP_CUSTOMIZATION_FILE[] = "zombie_plague_special.ini"
@@ -51,11 +56,12 @@ new const g_chance = 90
 public plugin_init()
 {
 	// Plugin registeration.
-	register_plugin("[ZP] Class Alien","1.1", "[P]erfec[T] [S]cr[@]s[H]")
+	register_plugin("[ZP] Class Alien","1.2", "[P]erfec[T] [S]cr[@]s[H]")
 	
 	cvar_minplayers = register_cvar("zp_alien_minplayers", "2")
 	cvar_alien_damage = register_cvar("zp_alien_damage", "500")
 	RegisterHam(Ham_TakeDamage, "player", "fw_TakeDamage")
+	register_forward(FM_AddToFullPack, "forward_AddToFullPack", 1); 
 	
 	g_msg_sync = CreateHudSyncObj()
 	g_maxplayers = get_maxplayers()
@@ -285,6 +291,36 @@ public zp_user_infected_post(id)
 	}
 }
 
+public forward_AddToFullPack(es_handle, e, entity, host, hostflags, player, pSet)
+{
+	if(!is_user_alive(host))
+		return FMRES_IGNORED;
+
+	if(zp_get_zombie_special_class(host) != g_speciald || zp_get_user_nightvision(host) != 2)
+        return FMRES_IGNORED;
+
+	if(player) { // Player Entities
+		set_es(es_handle, ES_RenderFx, kRenderFxGlowShell);
+
+		if(zp_get_user_zombie(entity))
+			set_es(es_handle, ES_RenderColor, { 255, 0, 0 });
+		else 
+			set_es(es_handle, ES_RenderColor, { 0, 100, 255 });
+
+		set_es(es_handle, ES_RenderMode, kRenderTransAlpha);
+		set_es(es_handle, ES_RenderAmt, 5);
+	}
+	else // Other Entities
+	{
+		set_es(es_handle, ES_RenderFx, kRenderFxGlowShell);
+		set_es(es_handle, ES_RenderColor, { 0, 0, 0 });
+		set_es(es_handle, ES_RenderMode, kRenderTransAdd);
+		set_es(es_handle, ES_RenderAmt, 255);
+	}
+
+	return FMRES_IGNORED;
+}
+
 stock ScreenFade(id, Timer, r, g ,b, Alpha) 
 {	
 	if(!is_user_connected(id)) return;
@@ -313,7 +349,6 @@ public native_get_alien_count()
 public native_is_alien_round()
 	return (zp_get_current_mode() == g_gameid)	
 
-
 precache_ambience(sound[])
 {
 	static buffer[150]
@@ -330,7 +365,6 @@ precache_ambience(sound[])
 			format(buffer, charsmax(buffer), "%s", sound[6])
 		else
 			format(buffer, charsmax(buffer), "%s", sound)
-		
 		
 		precache_sound(buffer)
 	}
