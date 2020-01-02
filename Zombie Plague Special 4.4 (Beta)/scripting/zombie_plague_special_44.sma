@@ -8271,7 +8271,14 @@ public native_set_user_batteries(id, value) { // Native: zp_set_user_batteries
 }
 public native_get_user_nightvision(id) { // Native: zp_get_user_nightvision
 	if(!is_user_valid(id)) return -1;
-	return g_nvision[id];
+
+	if(g_nvisionenabled[id])
+		return 2;
+
+	if(g_nvision[id])
+		return 1;
+
+	return 0;
 }
 public native_set_rendering(id, fx, r, g, b, render, amount) { // Native: zp_set_user_rendering
 	if(!is_user_valid(id)) return false;
