@@ -16,10 +16,10 @@
 #define ZP_TEAM_PREDATOR (1<<7)
 
 // Teams Group for easy register
-#define ZP_TEAM_ZOMBIE_SPECIAL = -1 // All Specials Zombies (Including Custons)
-#define ZP_TEAM_HUMAN_SPECIAL = -2 // All Specials Humans (Including Custons)
-#define ZP_TEAM_ANY_SPECIAL = -3 // All Specials Clsses (Including Custons)
-#define ZP_TEAM_ALL = -4 // All Classes
+#define ZP_TEAM_ZOMBIE_SPECIAL -1 // All Specials Zombies (Including Custons)
+#define ZP_TEAM_HUMAN_SPECIAL -2 // All Specials Humans (Including Custons)
+#define ZP_TEAM_ANY_SPECIAL -3 // All Specials Clsses (Including Custons)
+#define ZP_TEAM_ALL -4 // All Classes
 
 // Max Players
 #define ZP_MAX_PLAYERS 32
