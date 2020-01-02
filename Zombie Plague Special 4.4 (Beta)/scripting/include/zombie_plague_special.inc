@@ -124,7 +124,7 @@ native zp_set_user_batteries(id, charge)
  * Returns whether a player has night vision.
  *
  * @param id		Player index.
- * @return		True if it has, false otherwise.
+ * @return			2 if it has enable, 1 if it has but are disable, 0 otherwise.
  */
 native zp_get_user_nightvision(id)
 
