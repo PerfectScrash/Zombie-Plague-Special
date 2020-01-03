@@ -213,5 +213,7 @@ Change Log:
 		- Stock: zp_get_alive_players()
 		- Stock: zp_play_sound(id, const sound[])
 		- Stock: zp_colored_print(target, with_tag, const message[], any:...)
+	- Added Get Nightvision enable Api in native zp_get_user_nightvision
+	- Added Alien Vision for Special Class: Alien
 
 
