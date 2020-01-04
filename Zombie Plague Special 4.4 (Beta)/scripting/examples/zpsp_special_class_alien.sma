@@ -6,7 +6,7 @@
 	4.4 Update:
 		Added "Alien Vision" on this example class
 		With Alien vision you can see Invisible Players (Like Spy and Predators)
-		Added "Dark Map" Like in Assassin Round
+		Added "Dark Map" Like in Assassin Round 
 */
 
 
