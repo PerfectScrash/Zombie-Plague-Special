@@ -69,7 +69,7 @@ stock zp_colored_print(target, with_tag, const message[], any:...) {
 	if(!target) { // Send to everyone
 		static player
 		for(player = 1; player <= ZP_MAX_PLAYERS; player++) {
-			if(!is_user_connected(player) continue; // Not connected
+			if(!is_user_connected(player)) continue; // Not connected
 			
 			// Remember changed arguments
 			static changed[5], changedcount // [5] = max LANG_PLAYER occurencies
