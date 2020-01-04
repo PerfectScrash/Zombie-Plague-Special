@@ -6,6 +6,7 @@
 	4.4 Update:
 		Added "Alien Vision" on this example class
 		With Alien vision you can see Invisible Players (Like Spy and Predators)
+		Added "Dark Map" Like in Assassin Round
 */
 
 
@@ -35,12 +36,12 @@ new const sp_painsound[] = "zombie_plague/nemesis_pain1.wav"
 new const sp_hp = 50000
 new const sp_speed = 300
 new const Float:sp_gravity = 0.5
-new const sp_aura_size = 25
+new const sp_aura_size = 10
 new const Float:sp_knockback = 0.25
 new const sp_allow_glow = 1
-new const sp_color_r =  255
+new const sp_color_r =  100
 new const sp_color_g = 0
-new const sp_color_b = 0
+new const sp_color_b = 200
 new acess_flags[2]
 
 // Variables
@@ -49,6 +50,9 @@ new const g_chance = 90
 
 // Enable Ambience?
 #define AMBIENCE_ENABLE 0
+
+// Default Alien Light
+#define ALIEN_LIGHTING "a"
 
 // Ambience sounds task
 #define TASK_AMB 3256
@@ -246,6 +250,8 @@ start_alien_mode()
 	static name[32]; get_user_name(id, name, 31);
 	set_hudmessage(sp_color_r, sp_color_g, sp_color_b, -1.0, 0.17, 1, 0.0, 5.0, 1.0, 1.0, -1)
 	ShowSyncHudMsg(0, g_msg_sync, "%s is an %s", name, sp_name)
+
+	zp_set_lighting(ALIEN_LIGHTING)
 		
 	// Turn the remaining players into zombies
 	for (id = 1; id <= g_maxplayers; id++)
@@ -293,7 +299,7 @@ public zp_user_infected_post(id)
 
 public forward_AddToFullPack(es_handle, e, entity, host, hostflags, player, pSet)
 {
-	if(!is_user_alive(host))
+	if(!is_user_alive(host) || !pev_valid(entity))
 		return FMRES_IGNORED;
 
 	if(zp_get_zombie_special_class(host) != g_speciald || zp_get_user_nightvision(host) != 2)
@@ -312,6 +318,13 @@ public forward_AddToFullPack(es_handle, e, entity, host, hostflags, player, pSet
 	}
 	else // Other Entities
 	{
+		static classname[32];
+		pev(entity, pev_classname, classname, charsmax(classname))
+
+		if(!equal(classname, "func_", 5) && !equal(classname, "weaponbox") && !equal(classname, "armoury_entity")
+		|| contain(classname, "button") != -1 || contain(classname, "ladder") != -1)
+			return FMRES_IGNORED;
+
 		set_es(es_handle, ES_RenderFx, kRenderFxGlowShell);
 		set_es(es_handle, ES_RenderColor, { 0, 0, 0 });
 		set_es(es_handle, ES_RenderMode, kRenderTransAdd);
@@ -335,7 +348,6 @@ stock ScreenFade(id, Timer, r, g ,b, Alpha)
 	write_byte(Alpha)
 	message_end()
 }
-
 
 public native_get_user_alien(id)
 	return (zp_get_zombie_special_class(id) == g_speciald)
