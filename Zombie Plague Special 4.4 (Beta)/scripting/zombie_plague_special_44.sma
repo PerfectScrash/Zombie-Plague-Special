@@ -201,8 +201,10 @@
 			- Added Cvar: zp_swarm_ratio
 			- Added Escape support for enable/disable internal gamemodes in a certain modes
 			- Optmized Code
+		
 		* 4.3 [Fix]:
 			- Fixed small bug with extra item grenades (Like antidote bomb, jump bomb, etc)
+		
 		* 4.4 Beta:
 			- Fixed Plague Mod
 			- Added ZP_CHAT_TAG in lang (You can change chat tag now) [Lang updated: update lang for prevent bugs]
@@ -212,6 +214,11 @@
 			- Changed Native "zp_set_extra_damage"
 			- Fixed Native in include: "zp_get_special_class_name"
 			- Fixed Trigger Hurt kill
+			
+		--- Beta Update 1/3/20
+			- Fixed painfree/knockback
+			- Added Support to change roundtime in zombie_plague_special.ini
+
 
 ============================================================================================================================*/
 /*================================================================================
@@ -1213,8 +1220,20 @@ public plugin_init() {
 	
 	server_print("[ZP] Total Registered Zombie Classes: %d", g_zclass_i) // Print the number of registered Zombie Classes
 	server_print("[ZP] Total Registered Extra Items: %d", g_extraitem_i) // Print the number of registered Extra Items
-	
-	if(g_escape_map) set_cvar_num("mp_roundtime", 10) // Set roundtime to 10 minutes because most of escape maps are long
+
+	new Float:game_roundtime
+	if(g_escape_map) {
+		game_roundtime = 15.0
+		if(!amx_load_setting_float(ZP_CUSTOMIZATION_FILE, "Main Configs", "ZOMBIE ESCAPE ROUNDTIME", game_roundtime))
+			amx_save_setting_float(ZP_ZOMBIECLASSES_FILE, "Main Configs", "ZOMBIE ESCAPE ROUNDTIME", game_roundtime) // Backwards compatibility		
+	}
+	else {
+		game_roundtime = 5.0
+		if(!amx_load_setting_float(ZP_CUSTOMIZATION_FILE, "Main Configs", "ZOMBIE PLAGUE ROUNDTIME", game_roundtime))
+			amx_save_setting_float(ZP_ZOMBIECLASSES_FILE, "Main Configs", "ZOMBIE PLAGUE ROUNDTIME", game_roundtime) // Backwards compatibility		
+	}
+	set_cvar_float("mp_roundtime", game_roundtime) // Change Roundtime
+	server_print("[ZP] Game Roundtime: %0.2f", game_roundtime)
 
 	register_dictionary("zombie_plague_special.txt") // Language files
 	
@@ -2475,11 +2494,12 @@ public fw_TakeDamage_Post(victim, inflictor, attacker, Float:damage, damage_type
 				return; 
 		}
 	}	
-	if(pev_valid(victim) != PDATA_SAFE) 
-		return; // Prevent server crash if entity's private data not initalized
+	//if(pev_valid(victim) != PDATA_SAFE) 
+		//return; // Prevent server crash if entity's private data not initalized
 
 	set_pdata_float(victim, OFFSET_PAINSHOCK, 1.0, OFFSET_LINUX) // Set pain shock free offset
 }
+
 public fw_TraceAttack(victim, attacker, Float:damage, Float:direction[3], tracehandle, damage_type) { // Ham Trace Attack Forward
 	if(victim == attacker || !is_user_valid_connected(attacker)) return HAM_IGNORED; // Non-player damage or self damage
 	
@@ -2487,53 +2507,69 @@ public fw_TraceAttack(victim, attacker, Float:damage, Float:direction[3], traceh
 	if(g_newround || g_endround || g_currentmode == MODE_NONE || g_nodamage[victim] || (g_frozen[victim] && !get_pcvar_num(cvar_frozenhit)))
 		return HAM_SUPERCEDE;
 
-	if(g_zombie[attacker] == g_zombie[victim]) return HAM_SUPERCEDE; // Prevent friendly fire
+	if(g_zombie[attacker] == g_zombie[victim]) 
+		return HAM_SUPERCEDE; // Prevent friendly fire
 	
 	// Victim isn't a zombie or not bullet damage, nothing else to do here
-	if(!g_zombie[victim] || !(damage_type & DMG_BULLET)) return HAM_IGNORED;
+	if(!g_zombie[victim] || !(damage_type & DMG_BULLET)) 
+		return HAM_IGNORED;
 	
 	// If zombie hitzones are enabled, check whether we hit an allowed one
 	if(get_pcvar_num(cvar_hitzones) && g_zm_special[victim] <= 0 && !(get_pcvar_num(cvar_hitzones) & (1<<get_tr2(tracehandle, TR_iHitgroup))))
 		return HAM_SUPERCEDE;
 	
-	if(!get_pcvar_num(cvar_knockback)) return HAM_IGNORED; // Knockback disabled, nothing else to do here
+	if(!get_pcvar_num(cvar_knockback)) 
+		return HAM_IGNORED; // Knockback disabled, nothing else to do here
 
 	// Specials knockback disabled, nothing else to do here	
-	if(g_zm_special[victim] > 0 && g_zm_special[victim] < MAX_SPECIALS_ZOMBIES) if(get_pcvar_float(cvar_zmsp_knockback[g_zm_special[victim]]) == 0.0) return HAM_IGNORED;
-	else if(g_zombie_knockback[victim] == 0.0) return HAM_IGNORED;
+	if(g_zm_special[victim] > 0 && g_zm_special[victim] < MAX_SPECIALS_ZOMBIES) {
+		if(get_pcvar_float(cvar_zmsp_knockback[g_zm_special[victim]]) == 0.0) 
+			return HAM_IGNORED;
+	}
+	else if(g_zombie_knockback[victim] == 0.0 && g_zm_special[victim] >= MAX_SPECIALS_ZOMBIES) 
+		return HAM_IGNORED;
 
 	// Get whether the victim is in a crouch state
 	static ducking; ducking = pev(victim, pev_flags) & (FL_DUCKING | FL_ONGROUND) == (FL_DUCKING | FL_ONGROUND)
 	
-	if(ducking && get_pcvar_float(cvar_knockbackducking) == 0.0) return HAM_IGNORED; // Zombie knockback when ducking disabled
+	if(ducking && get_pcvar_float(cvar_knockbackducking) == 0.0) 
+		return HAM_IGNORED; // Zombie knockback when ducking disabled
 	
 	// Get distance between players
 	static origin1[3], origin2[3]
 	get_user_origin(victim, origin1)
 	get_user_origin(attacker, origin2)
 
-	if(get_distance(origin1, origin2) > get_pcvar_num(cvar_knockbackdist)) return HAM_IGNORED; // Max distance exceeded
+	if(get_distance(origin1, origin2) > get_pcvar_num(cvar_knockbackdist)) 
+		return HAM_IGNORED; // Max distance exceeded
 
 	static Float:velocity[3]; pev(victim, pev_velocity, velocity) // Get victim's velocity
 
-	if(get_pcvar_num(cvar_knockbackdamage)) xs_vec_mul_scalar(direction, damage, direction) // Use damage on knockback calculation
+	if(get_pcvar_num(cvar_knockbackdamage)) 
+		xs_vec_mul_scalar(direction, damage, direction) // Use damage on knockback calculation
 	
 	// Use weapon power on knockback calculation
-	if(get_pcvar_num(cvar_knockbackpower) && kb_weapon_power[g_currentweapon[attacker]] > 0.0) xs_vec_mul_scalar(direction, kb_weapon_power[g_currentweapon[attacker]], direction)
+	if(get_pcvar_num(cvar_knockbackpower) && kb_weapon_power[g_currentweapon[attacker]] > 0.0) 
+		xs_vec_mul_scalar(direction, kb_weapon_power[g_currentweapon[attacker]], direction)
 
-	if(ducking) xs_vec_mul_scalar(direction, get_pcvar_float(cvar_knockbackducking), direction) // Apply ducking knockback multiplier
+	if(ducking) 
+		xs_vec_mul_scalar(direction, get_pcvar_float(cvar_knockbackducking), direction) // Apply ducking knockback multiplier
 	
 	// Apply zombie class/nemesis knockback multiplier
-	if(g_zm_special[victim] >= MAX_SPECIALS_ZOMBIES || g_zm_special[victim] <= 0) xs_vec_mul_scalar(direction, g_zombie_knockback[victim], direction) 
-	else xs_vec_mul_scalar(direction, get_pcvar_float(cvar_zmsp_knockback[g_zm_special[victim]]), direction)
+	if(g_zm_special[victim] >= MAX_SPECIALS_ZOMBIES || g_zm_special[victim] <= 0) 
+		xs_vec_mul_scalar(direction, g_zombie_knockback[victim], direction) 
+	else 
+		xs_vec_mul_scalar(direction, get_pcvar_float(cvar_zmsp_knockback[g_zm_special[victim]]), direction)
 
 	xs_vec_add(velocity, direction, direction) // Add up the new vector
 
-	if(!get_pcvar_num(cvar_knockbackzvel)) direction[2] = velocity[2] // Should knockback also affect vertical velocity?
+	if(!get_pcvar_num(cvar_knockbackzvel)) 
+		direction[2] = velocity[2] // Should knockback also affect vertical velocity?
 
 	set_pev(victim, pev_velocity, direction) // Set the knockback'd victim's velocity
 	return HAM_IGNORED;
 }
+
 public fw_ResetMaxSpeed_Post(id) { // Ham Reset MaxSpeed Post Forward
 	if(g_freezetime || !g_isalive[id]) 
 		return; // Freezetime active or player not alive
@@ -10721,6 +10757,9 @@ new const personal_color_langs[][] = { "MENU_COLOR_DEFAULT", "MENU_PERSONAL_COLO
 "MENU_PERSONAL_COLOR5", "MENU_PERSONAL_COLOR6", "MENU_PERSONAL_COLOR7" }
 enum { HUD = 0, FLASHLIGHT, NIGHTVISION }
 public show_menu_personal(id) {
+	if(!is_user_valid_connected(id))
+		return;
+
 	static szText[555]
 	formatex(szText, charsmax(szText), "%L", id, "MENU_PERSONAL_TITLE")
 	new menu = menu_create(szText, "show_menu_personal_handler")
@@ -10769,6 +10808,9 @@ public show_menu_personal_handler(id, menu, item) {
 public menu_hud_config(id) {
 	if(!get_pcvar_num(cvar_huddisplay))
 		return
+
+	if(!is_user_valid_connected(id))
+		return;
 	
 	new szText[555]
 	formatex(szText, charsmax(szText), "%L", id, "MENU_HUD_TITLE")
@@ -10806,6 +10848,9 @@ public menu_hud_config_handler(id, menu, item) {
 	
 }
 public menu_color(id, zm, type) {
+	if(!is_user_valid_connected(id))
+		return;
+
 	static szText[555], szItem[32], szItem2[32]
 
 	switch(type) {
@@ -10864,6 +10909,9 @@ public menu_color_handler(id, menu, item) {
 new const hud_langs[][] = { "MENU_HUD_TYPE_ITEM1", "MENU_HUD_TYPE_ITEM2", "MENU_HUD_TYPE_ITEM3", "MENU_HUD_TYPE_ITEM4", "MENU_HUD_TYPE_ITEM5", "MENU_HUD_TYPE_ITEM6" }
 public menu_hud_config_type(id) {
 	if(!get_pcvar_num(cvar_huddisplay)) return
+
+	if(!is_user_valid_connected(id))
+		return;
 	
 	static szText[555], szKey[10]
 	formatex(szText, charsmax(szText), "%L", id, "MENU_HUD_TYPE_TITLE")
@@ -10900,6 +10948,9 @@ public menu_hud_config_type_handler(id, menu, item) {
 }
 public menu_nightvision(id) {
 	if(!get_pcvar_num(cvar_customnvg) || !get_pcvar_num(cvar_nvision_menu[0]) && !get_pcvar_num(cvar_nvision_menu[1])) return
+
+	if(!is_user_valid_connected(id))
+		return;
 
 	static szText[555]
 	formatex(szText, charsmax(szText), "%L", id, "MENU_NVISION_CONFIG_TITLE")
