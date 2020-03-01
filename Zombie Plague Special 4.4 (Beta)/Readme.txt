@@ -231,4 +231,7 @@ Change Log:
 		- Stock: zp_colored_print(target, with_tag, const message[], any:...)
 	- Added Get Nightvision enable Api in native zp_get_user_nightvision
 	- Added Alien Vision for Special Class: Alien
+	--- Beta Update 1/3/20
+		- Fixed painfree/knockback
+		- Added Support to change roundtime in zombie_plague_special.ini
 
