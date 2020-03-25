@@ -44,11 +44,11 @@ Bombardier (From ZP Shade), Wesker (From Zombie Apocalipse), Spy and Dragon
 	- Fixed Native in include: "zp_get_special_class_name"
 	- Fixed Trigger Hurt kill
 	
-	--- Beta Update 1/3/20
+	- Beta Update 1/3/20
 		- Fixed painfree/knockback
 		- Added Support to change roundtime in zombie_plague_special.ini
 
-	--- Beta Update 25/3/20
+	- Beta Update 25/3/20
 		- Added Respawn limit cvars by gamemode (Same with custom gamemodes but you can change only in zpsp_gamemodes.ini)
 		- Added Native: zpsp_register_gamemode(const name[], flags, chance, allow, dm_mode, resp_limit=0, enable_in_ze=0)
 		- Added Custom Death sound for Normal/Special Zombie Classes (Now you can change in .ini files for any class)
