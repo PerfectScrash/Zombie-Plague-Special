@@ -213,6 +213,7 @@ Change Log:
 	- Optmized Code
 * 4.3 [Fix]:
 	- Fixed small bug with extra item grenades (Like antidote bomb, jump bomb, etc)
+
 * 4.4 Beta:
 	- Fixed Plague Mod
 	- Added ZP_CHAT_TAG in lang (You can change chat tag now) [Lang updated: update lang for prevent bugs]
@@ -221,17 +222,14 @@ Change Log:
 	- Added Cvar "zp_ammopack_damage"
 	- Changed Native "zp_set_extra_damage"
 	- Fixed Native in include: "zp_get_special_class_name"
-	- Added Stocks:
-		- Stock: zp_is_infection_round()
-		- Stock: zp_is_multi_infection_round()
-		- Stock: zp_is_custom_round()
-		- Stock: zp_is_armageddon_round()
-		- Stock: zp_get_alive_players() {
-		- Stock: zp_play_sound(id, const sound[])
-		- Stock: zp_colored_print(target, with_tag, const message[], any:...)
-	- Added Get Nightvision enable Api in native zp_get_user_nightvision
-	- Added Alien Vision for Special Class: Alien
+	- Fixed Trigger Hurt kill
+	
 	--- Beta Update 1/3/20
 		- Fixed painfree/knockback
 		- Added Support to change roundtime in zombie_plague_special.ini
 
+	--- Beta Update 25/3/20
+		- Added Respawn limit cvars by gamemode (Same with custom gamemodes but you can change only in zpsp_gamemodes.ini)
+		- Added Native: zpsp_register_gamemode(const name[], flags, chance, allow, dm_mode, resp_limit=0, enable_in_ze=0)
+		- Added Custom Death sound for Normal/Special Zombie Classes (Now you can change in .ini files for any class)
+		- Added Pain Sounds for specific zombie class (You can change in zpsp_zombieclasses.ini)
