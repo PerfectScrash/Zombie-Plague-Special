@@ -1,52 +1,40 @@
-////////////////////////////////////////// Plugin Make/Edited By: //////////////////////////////////////////
-
-||||||||             |||||||							||||||||             |||||||	     ||||||||		|||||||			     ||||||||		|||||||            ||||||||	     ||||||||
-||	||||||||||| 	  ||		     	     ||||			||	||||||||||||	  ||	     ||	     ||||||||||	     ||			     ||	    ||||||||||||     ||		   ||	   ||	   ||	   ||
-||	||	  ||	  ||			     ||				||           ||		  ||	     ||	    ||		     ||			     ||	    ||	      ||     ||            ||	   ||	   ||	   ||
-||	||	   || 	  ||			     ||				||           ||		  ||	     ||	    ||		     ||  		     ||	    || |||||  ||     ||            ||	   ||	   ||	   ||
-||	||	   || 	  ||	||||||||  |||||||| ||||||| ||||||||  ||||||||	||           ||		  ||	     ||      ||||||||||	     ||  ||||||||  ||||||||  ||     || || ||  ||     ||  |||||||   ||	   ||||||||||	   ||
-||	||||||||||||  	  ||	||    ||  ||	     ||    ||    ||  ||		||           ||		  ||	     ||		      ||     ||	 ||	   ||	     ||	    || |||||| ||     || ||         ||	   ||	   ||	   ||
-||	||	      	  ||	||||||||  ||	     ||    ||||||||  ||		||           ||		  ||	     ||		      ||     ||	 ||	   ||	     ||     ||	      ||     || ||||||||   ||	   ||	   ||	   ||
-||	||	      	  ||	||        ||	     ||    ||        ||		||           ||		  ||	     ||	     ||||||||||	     ||	 ||        ||        ||     ||||||||||||     ||        ||  ||	   ||	   ||	   ||
-||	||	      	  ||	||||||||  ||	     ||    ||||||||  ||||||||	||||||||	     |||||||	     ||||||||		|||||||  ||||||||  ||        ||||||||		||||||| ||||||||   ||||||||	     ||||||||
-||||||||	     |||||||
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////// ZOMBIE PLAGUE SPECIAL /////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Zombie Plague Special is a unofficial version edited in ZPA 1.6.1's core using a stable,
 improved and optimized code which avoids server crashes and reduce lag. 
 And Some modes are added like Berserker (Knifer), Predator (NightCrawler),
 Bombardier (From ZP Shade), Wesker (From Zombie Apocalipse), Spy and Dragon
 
-Game Play Modes:
-- Normal Modes: Simple Infection, Multiple Infection, Swarm Mode, Plague Mode, Armageddon
-- Special Modes: Nemesis, Survivor, Assassin, Sniper, Berserker, Predator, Wesker, Bombardier, Spy, Dragon
-- Custom Modes (If Enable): Assassin Vs Sniper, Nightmare, Remix
+* Game Play Modes:
+	- Normal Modes: Simple Infection, Multiple Infection, Swarm Mode, Plague Mode, Armageddon
+	- Special Modes: Nemesis, Survivor, Assassin, Sniper, Berserker, Predator, Wesker, Bombardier, Spy, Dragon
+	- Custom Modes (If Enable): Assassin Vs Sniper, Nightmare, Remix
 
-Special Classes Descriptions:
-- Nemesis: Classic Zombie with more health, glow and aura
-- Survivor: Classic Human with a M249 + Unlimited clip
-- Assassin: Classic Zombie with a darkness map in your round
-- Sniper: Classic Human with a Very Strong AWP can kill a zombie with one bullet
-- Berserker: Human with samurai sword like Ninja.
-- Predator: Invisible Zombie that when takes shot he returns to be visible again for a few seconds.
-- Wesker: From Zombie Apocalipse. Human with Deagle more Damage
-- Bombardier: From Zombie Plague Shade. Zombie with infinities kill bombs
-- Spy: Human with Simmilar Predator's Habilities and More Damage with M3 Shotgun
-- Dragon: Can Fly and Unleash Fire and Ice
+* Special Classes Descriptions:
+	- Nemesis: Classic Zombie with more health, glow and aura
+	- Survivor: Classic Human with a M249 + Unlimited clip
+	- Assassin: Classic Zombie with a darkness map in your round
+	- Sniper: Classic Human with a Very Strong AWP can kill a zombie with one bullet
+	- Berserker: Human with samurai sword like Ninja.
+	- Predator: Invisible Zombie that when takes shot he returns to be visible again for a few seconds.
+	- Wesker: From Zombie Apocalipse. Human with Deagle more Damage
+	- Bombardier: From Zombie Plague Shade. Zombie with infinities kill bombs
+	- Spy: Human with Simmilar Predator's Habilities and More Damage with M3 Shotgun
+	- Dragon: Can Fly and Unleash Fire and Ice
 
-Credits:
-- MeRcyLeZZ: for original zp version
-- ROKronoS: for idea of Bombardier Mod
-- abdul-rehman and ZPA Team: for zpa version and some special mods
-- Junin: For Spy mode Idea
-- Perfect Scrash: For Adding New Modes, fix and Optimizing Code
+*Credits:
+	- MeRcyLeZZ: for original zp version
+	- ROKronoS: for idea of Bombardier Mod
+	- abdul-rehman and ZPA Team: for zpa version and some special mods
+	- Junin: For Spy mode Idea
+	- Perfect Scrash: For Adding New Modes, fix and Optimizing Code
 
-Official Link of Mod:
-https://forums.alliedmods.net/showthread.php?t=260845
+* Official Link of Mod:
+	https://forums.alliedmods.net/showthread.php?t=260845
 
-Change Log:
+* Change Log:
 
 * 1.0:
 	- First Post
