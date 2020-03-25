@@ -163,7 +163,7 @@ public plugin_precache()
 	}
 	
 	// Register our game mode
-	g_gameid = zp_register_game_mode("Synapsis", access_flag, g_chance, 0, ZP_DM_BALANCE)
+	g_gameid = zpsp_register_gamemode("Synapsis", access_flag, g_chance, 0, ZP_DM_BALANCE)
 }
 
 public plugin_natives() {
