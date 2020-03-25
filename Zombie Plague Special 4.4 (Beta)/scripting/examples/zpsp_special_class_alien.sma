@@ -154,7 +154,7 @@ public plugin_precache()
 	}
 	
 	// Register Special Class and Game mod
-	g_gameid = zp_register_game_mode(sp_name, acess_flags[0], g_chance, 0, 0)
+	g_gameid = zpsp_register_gamemode(sp_name, acess_flags[0], g_chance, 0, 0)
 	g_speciald = zp_register_zombie_special(sp_name, sp_model, sp_knifemodel, sp_painsound, sp_hp, sp_speed, sp_gravity, acess_flags[1], sp_knockback, sp_aura_size, sp_allow_glow, sp_color_r, sp_color_g, sp_color_b)
 }
 
