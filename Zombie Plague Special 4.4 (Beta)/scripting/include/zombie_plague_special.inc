@@ -578,9 +578,22 @@ native zp_get_zombie_class_id(const name[])
  * @param allow		Whether to permit infection or not after a zombie's attack
  * @param dm_mode	Death match mode during this game. Use ZP_DM_NONE to disable
  * 			respawning during this game mode
+ * @param resp_limit	Respawn Limit (Use 0 for unlimited respawn)
+ * @param enable_in_ze	Enable Game mode in zombie escape maps (0 - Disable | 1 - Enable)
  * @return		An internal game mode ID or -1 on failure
  */
+ native zpsp_register_gamemode(const name[], flags, chance, allow, dm_mode, resp_limit=0, enable_in_ze=0)
+
+#if AMXX_VERSION_NUM < 183
 native zp_register_game_mode(const name[], flags, chance, allow, dm_mode)
+#else
+/**
+ * @deprecated This function are update your functions
+ */ 
+#pragma deprecated Use zpsp_register_gamemode(const name[], flags, chance, allow, dm_mode, resp_limit=0, enable_in_ze=0) instead.
+native zp_register_game_mode(const name[], flags, chance, allow, dm_mode)
+#endif
+
 
 /**
  * Registers a custom item which will be added to the extra items menu of ZP.
