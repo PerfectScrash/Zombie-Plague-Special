@@ -220,3 +220,4 @@
 			- Added Native: zpsp_register_gamemode(const name[], flags, chance, allow, dm_mode, resp_limit=0, enable_in_ze=0)
 			- Added Custom Death sound for Normal/Special Zombie Classes (Now you can change in .ini files for any class)
 			- Added Pain Sounds for specific zombie class (You can change in zpsp_zombieclasses.ini)
+			- Added Native: zp_get_custom_extra_start()
