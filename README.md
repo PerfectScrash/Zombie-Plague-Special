@@ -10,6 +10,7 @@
 	- **Normal Modes:** Simple Infection, Multiple Infection, Swarm Mode, Plague Mode, Armageddon
 	- **Special Modes:** Nemesis, Survivor, Assassin, Sniper, Berserker, Predator, Wesker, Bombardier, Spy, Dragon
 	- **Custom Modes (If Enable):** Assassin Vs Sniper, Nightmare, Remix
+	- **More Custom Modes (If you want):** https://github.com/PerfectScrash/ZP-Special-Mods
 
 * **Special Classes Descriptions:**
 	- **Nemesis:** Classic Zombie with more health, glow and aura
@@ -22,6 +23,8 @@
 	- **Bombardier:** From Zombie Plague Shade. Zombie with infinities kill bombs
 	- **Spy:** Human with Simmilar Predator's Habilities and More Damage with M3 Shotgun
 	- **Dragon:** Can Fly and Unleash Fire and Ice
+	
+* **If you Want to see more ZPSp Gameplay Additions Click Here: https://github.com/PerfectScrash/ZP-Special-Additions**
 
 * **Credits:**
 	- **MeRcyLeZZ:** for original zp version
