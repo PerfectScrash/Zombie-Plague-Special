@@ -699,6 +699,9 @@ native zp_set_next_game_mode(gameid) // Start Game mode in a next round
 native zp_is_special_class_enable(is_zm, classid) // Special Class are enable
 native zp_is_gamemode_enable(modeid) // Gamemode are enable
 
+// New Natives (4.4 Beta)
+native zp_get_custom_extra_start() // Get Custom Extra Item Start ID
+
 // Fixed Natives (4.4 Version or higher Available)
 native zp_get_special_class_name(id, name[], len) // Get user Special Class Real Name
 
