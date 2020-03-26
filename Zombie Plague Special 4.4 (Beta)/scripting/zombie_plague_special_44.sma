@@ -224,6 +224,7 @@
 			- Added Native: zpsp_register_gamemode(const name[], flags, chance, allow, dm_mode, resp_limit=0, enable_in_ze=0)
 			- Added Custom Death sound for Normal/Special Zombie Classes (Now you can change in .ini files for any class)
 			- Added Pain Sounds for specific zombie class (You can change in zpsp_zombieclasses.ini)
+			- Added Native: zp_get_custom_extra_start()
 
 
 ============================================================================================================================*/
@@ -902,6 +903,8 @@ public plugin_natives() {
 	// New Natives (4.4 or High Available)
 	register_native("zp_set_user_extra_damage", "native_set_user_extra_damage", 1)
 	register_native("zpsp_register_gamemode", "native_register_gamemode", 1)
+	register_native("zp_get_custom_extra_start", "native_get_custom_extra_start", 1)
+
 }
 public plugin_precache() {
 	register_plugin(PLUGIN, VERSION, AUTHOR) // Register earlier to show up in plugins list properly after plugin disable/error at loading
@@ -9905,6 +9908,8 @@ public native_get_zclass_count() return g_zclass_i; // Native: zp_get_zclass_cou
 public native_get_gamemodes_count() return (g_gamemodes_i - MAX_GAME_MODES); // Native: zp_get_gamemodes_count
 public native_get_custom_special_count(zm) return zm ? (g_zm_specials_i - MAX_SPECIALS_ZOMBIES) : (g_hm_specials_i - MAX_SPECIALS_HUMANS); // Native: zp_get_custom_special_count
 public native_is_escape_map() return g_escape_map; // Native: zp_is_escape_map
+public native_get_custom_extra_start() return EXTRAS_CUSTOM_STARTID;
+
 public native_do_random_spawn(id) { // Native: zp_do_random_spawn
 	if(!is_user_valid_alive(id)) return 0
 	if(get_pcvar_num(cvar_randspawn)) do_random_spawn(id) // random spawn (including CSDM)
