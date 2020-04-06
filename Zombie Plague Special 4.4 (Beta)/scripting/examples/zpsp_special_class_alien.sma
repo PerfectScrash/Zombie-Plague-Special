@@ -237,6 +237,9 @@ start_alien_mode()
 	has_alien = false
 	for (i = 1; i <= g_maxplayers; i++) {
 		if(zp_get_zombie_special_class(i) == g_speciald) {
+			if(!is_user_alive(i))
+				continue
+
 			id = i						// Get Alien Index
 			has_alien = true
 		}
