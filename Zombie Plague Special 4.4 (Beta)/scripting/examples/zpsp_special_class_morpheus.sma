@@ -255,6 +255,9 @@ start_morpheus_mode()
 	has_morpheus = false
 	for (i = 1; i <= g_maxplayers; i++) {
 		if(zp_get_human_special_class(i) == g_speciald) {
+			if(!is_user_alive(i))
+				continue
+
 			id = i
 			has_morpheus = true
 		}
