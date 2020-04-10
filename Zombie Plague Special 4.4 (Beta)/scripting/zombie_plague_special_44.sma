@@ -12,6 +12,9 @@
 		- Normal Modes: Simple Infection, Multiple Infection, Swarm Mode, Plague Mode, Armageddon
 		- Special Modes: Nemesis, Survivor, Assassin, Sniper, Berserker, Predator, Wesker, Bombardier, Spy, Dragon
 		- Custom Modes (If Enable): Assassin Vs Sniper, Nightmare, Remix
+		- More Custom Modes (If you want): https://github.com/PerfectScrash/ZP-Special-Mods
+
+	If you Want to see more ZPSp Gameplay Additions Click Here: https://github.com/PerfectScrash/ZP-Special-Additions
 	
 	Special Classes Descriptions:
 		- Nemesis: Classic Zombie with more health, glow and aura
@@ -180,6 +183,7 @@
 			- Improved Code
 			- .cfg update [Need Change for prevent possible bugs]
 			- Lang updated (For menu itens) [Need Change for prevent possible bugs]
+
 		* 4.3
 			- Fixed Native: zp_get_special_class_id
 			- Fixed Native: zp_get_zombie_class_realname
@@ -2395,10 +2399,10 @@ public fw_PlayerKilled_Post(victim, attacker, shouldgib) { // Ham Player Killed 
 		if(g_currentmode >= MAX_GAME_MODES)
 			limit_resp = ArrayGetCell(g_gamemode_respawn_limit, (g_currentmode - MAX_GAME_MODES))
 
-		if(g_currentmode == MODE_INFECTION || g_currentmode == MODE_MULTI)
+		else if(g_currentmode == MODE_INFECTION || g_currentmode == MODE_MULTI)
 			limit_resp = get_pcvar_num(cvar_respawn_limit[MODE_INFECTION])
 
-		if(g_currentmode != MODE_NONE && g_currentmode < MAX_GAME_MODES)
+		else if(g_currentmode != MODE_NONE && g_currentmode < MAX_GAME_MODES)
 			limit_resp = get_pcvar_num(cvar_respawn_limit[g_currentmode])
 
 		if(g_respawn_count[victim] >= limit_resp && limit_resp > 0)	
