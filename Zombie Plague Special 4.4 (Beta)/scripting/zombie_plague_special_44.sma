@@ -230,6 +230,13 @@
 			- Added Pain Sounds for specific zombie class (You can change in zpsp_zombieclasses.ini)
 			- Added Native: zp_get_custom_extra_start()
 
+		--- Beta Update 15/06/20
+			- Fixed Not Precached Sound '0'
+			- Added Fade Nightvision Mode (Can change by cvar "zp_nvg_custom")
+			- Added Cvar: "zp_nvg_fade_alpha"
+			- Added Madness delay (After Use)
+			- Added Cvar: "zp_extra_madness_use_delay"
+
 
 ============================================================================================================================*/
 /*================================================================================
@@ -343,7 +350,8 @@ enum (+= 100) { // Task offsets
 	TASK_WELCOMEMSG,
 	TASK_THUNDER_PRE,
 	TASK_THUNDER,
-	TASK_AMBIENCESOUNDS
+	TASK_AMBIENCESOUNDS,
+	TASK_MADNESS
 }
 // IDs inside tasks
 #define ID_MODEL (taskid - TASK_MODEL)
@@ -605,7 +613,7 @@ new g_zm_specials_i = MAX_SPECIALS_ZOMBIES, g_zm_special[33], Array:g_zm_sp_deat
 // Player vars
 new g_hud_type[33], g_hud_color[2][33], g_flashlight_color[33], g_flashlight_rgb[3], g_nv_color[2][33], g_nvrgb[3], g_respawn_count[33]
 new g_zombie[33], g_firstzombie[33], g_lastzombie[33], g_lasthuman[33], g_frozen[33], g_nodamage[33], g_respawn_as_zombie[33], Float:g_frozen_gravity[33], Float:g_buytime[33]
-new g_nvision[33], g_nvisionenabled[33], g_zombieclass[33], g_zombieclassnext[33], g_flashlight[33], g_flashbattery[33] = { 100, ... }
+new g_nvision[33], g_nvisionenabled[33], g_nvg_enabled_mode[33], g_zombieclass[33], g_zombieclassnext[33], g_flashlight[33], g_flashbattery[33] = { 100, ... }
 new g_canbuy[33], g_ammopacks[33], g_damagedealt[33], how_many_rewards, Float:g_lastleaptime[33], Float:g_lastflashtime[33], g_playermodel[33][32], g_bot_extra_count[33]
 new g_menu_data[33][14], g_ent_playermodel[33], g_ent_weaponmodel[33], g_burning_dur[33], Float:g_current_maxspeed[33], g_user_custom_speed[33]
 
@@ -700,7 +708,7 @@ enable_trail[MAX_GRENADES], enable_explode[MAX_GRENADES], enable_gib[MAX_GRENADE
 sprite_grenade_ring[64], sprite_grenade_fire[64], sprite_grenade_smoke[64], sprite_grenade_glass[64], grenade_rgb[MAX_GRENADES][3]
 
 // CVAR pointers
-new cvar_lighting, cvar_zombiefov, cvar_removemoney, cvar_thunder, cvar_deathmatch, cvar_customnvg, cvar_hitzones, cvar_flashsize[2], cvar_ammodamage, cvar_ammodamage_quantity, cvar_zombiearmor, cvar_chosse_instantanly,
+new cvar_lighting, cvar_zombiefov, cvar_removemoney, cvar_thunder, cvar_deathmatch, cvar_customnvg, cvar_nvg_alpha, cvar_hitzones, cvar_flashsize[2], cvar_ammodamage, cvar_ammodamage_quantity, cvar_zombiearmor, cvar_chosse_instantanly,
 cvar_flashdrain, cvar_zombiebleeding, cvar_removedoors, cvar_customflash, cvar_randspawn, cvar_ammoinfect, cvar_toggle, cvar_knockbackpower, cvar_freezeduration, cvar_triggered, cvar_flashcharge,
 cvar_firegrenades, cvar_frostgrenades, cvar_logcommands, cvar_spawnprotection, cvar_nvgsize, cvar_flareduration, cvar_zclasses, cvar_extraitems, cvar_showactivity, cvar_warmup, cvar_flashdist, cvar_flarecolor, cvar_fireduration, cvar_firedamage,
 cvar_flaregrenades, cvar_knockbackducking, cvar_knockbackdamage, cvar_knockbackzvel, cvar_multiratio, cvar_swarmratio, cvar_flaresize[2], cvar_spawndelay, cvar_extraantidote, cvar_extramadness, cvar_extraantidote_ze, cvar_extramadness_ze,
@@ -709,7 +717,7 @@ cvar_extrainfbomb, cvar_extrainfbomb_ze, cvar_knockback, cvar_fragsinfect, cvar_
 cvar_plagueratio, cvar_blocksuicide, cvar_knockbackdist,  cvar_respawnonsuicide, cvar_respawnafterlast, cvar_statssave, cvar_adminmodelshuman, cvar_vipmodelshuman,
 cvar_adminmodelszombie, cvar_vipmodelszombie, cvar_blockpushables, cvar_respawnworldspawnkill, cvar_madnessduration, cvar_plaguenemnum, cvar_plaguenemhpmulti, cvar_plaguesurvhpmulti,
 cvar_survweapon, cvar_plaguesurvnum, cvar_infectionscreenfade, cvar_infectionscreenshake, cvar_infectionsparkle, cvar_infectiontracers, cvar_infectionparticles, cvar_infbomblimit,
-cvar_flashshowall, cvar_hudicons, cvar_startammopacks, cvar_random_weapon[2], cvar_buyzonetime, cvar_antidotelimit, cvar_madnesslimit, 
+cvar_flashshowall, cvar_hudicons, cvar_startammopacks, cvar_random_weapon[2], cvar_buyzonetime, cvar_antidotelimit, cvar_madnesslimit, cvar_madness_use_countdown, g_madness_used[33], 
 cvar_adminknifemodelshuman, cvar_vipknifemodelshuman, cvar_adminknifemodelszombie, cvar_vipknifemodelszombie, cvar_keephealthondisconnect, 
 cvar_lnjnemhpmulti, cvar_lnjsurvhpmulti,  cvar_lnjratio, cvar_lnjrespsurv, cvar_lnjrespnem , cvar_frozenhit, cvar_aiminfo, cvar_human_unstuck, cvar_bot_buyitem_interval, cvar_bot_maxitem,
 cvar_mod_chance[MAX_GAME_MODES], cvar_mod_minplayers[MAX_GAME_MODES], cvar_mod_enable[MAX_GAME_MODES], cvar_mod_allow_respawn[MAX_GAME_MODES], cvar_respawn_limit[MAX_GAME_MODES],
@@ -1492,6 +1500,7 @@ public plugin_init() {
 	cvar_extrainfbomb_ze = register_cvar("zp_extra_infbomb_allow_escape", "0")
 	cvar_infbomblimit = register_cvar("zp_extra_infbomb_limit", "999")
 	cvar_antidote_minzms = register_cvar("zp_extra_antidote_min_zms", "5")
+	cvar_madness_use_countdown = register_cvar("zp_extra_madness_use_delay", "5.0")
 
 	// CVARS - Flashlight and Nightvision
 	cvar_zm_nvggive[0] = register_cvar("zp_nvg_give_zombies", "1")
@@ -1508,6 +1517,7 @@ public plugin_init() {
 	cvar_hm_nvggive[SPY] = register_cvar("zp_nvg_give_spy", "1")
 	cvar_spec_nvggive = register_cvar("zp_nvg_spectator", "1")
 	cvar_customnvg = register_cvar("zp_nvg_custom", "1")
+	cvar_nvg_alpha = register_cvar("zp_nvg_fade_alpha", "70")
 	cvar_nvgsize = register_cvar("zp_nvg_size", "80")
 	cvar_zm_red[0] = register_cvar("zp_zombie_madness_color_R", "255")
 	cvar_zm_green[0] = register_cvar("zp_zombie_madness_color_G", "0")
@@ -2214,25 +2224,15 @@ public fw_PlayerSpawn_Post(id) { // Ham Player Spawn Post Forward
 			if(!g_isbot[id]) {
 				if(enable == 1) { // Turn on Night Vision automatically?
 					g_nvisionenabled[id] = true
-					if(get_pcvar_num(cvar_customnvg)) { // Custom nvg?
-						remove_task(id+TASK_NVISION)
-						set_task(0.1, "set_user_nvision", id+TASK_NVISION, _, _, "b")
-					}
-					else set_user_gnvision(id, 1)
+					user_nightvision(id, 1)
 				}
-				else if(g_nvisionenabled[id]) { // Turn off nightvision when infected
-					if(get_pcvar_num(cvar_customnvg)) remove_task(id+TASK_NVISION)
-					else set_user_gnvision(id, 0)
-					g_nvisionenabled[id] = false
-				}
+				else nvision_toggle_off(id)
 			}
 			else cs_set_user_nvg(id, 1); // turn on NVG for bots
 		}
 		else if(g_nvision[id]) { // Disable nightvision when turning into human/survivor (bugfix)
-			if(get_pcvar_num(cvar_customnvg)) remove_task(id+TASK_NVISION)
-			else if(g_nvisionenabled[id]) set_user_gnvision(id, 0)
+			nvision_toggle_off(id)
 			g_nvision[id] = false
-			g_nvisionenabled[id] = false
 		}
 	}
 	ExecuteHamB(Ham_Player_ResetMaxSpeed, id) // Set human maxspeed
@@ -2283,33 +2283,23 @@ public fw_PlayerKilled(victim, attacker, shouldgib) { // Ham Player Killed Forwa
 		
 		// Disable nightvision when killed (bugfix)
 		if(get_pcvar_num(g_zombie[victim] ? cvar_zm_nvggive[g_zm_special[victim]] : cvar_hm_nvggive[g_hm_special[victim]]) == 0 && g_nvision[victim]) {
-			if(get_pcvar_num(cvar_customnvg)) remove_task(victim+TASK_NVISION)
-			else if(g_nvisionenabled[victim]) set_user_gnvision(victim, 0)
+			nvision_toggle_off(victim)
 			g_nvision[victim] = false
-			g_nvisionenabled[victim] = false
 		}
 		
 		// Turn off nightvision when killed (bugfix)
-		if(get_pcvar_num(g_zombie[victim] ? cvar_zm_nvggive[g_zm_special[victim]] : cvar_hm_nvggive[g_hm_special[victim]]) == 2 && g_nvision[victim] && g_nvisionenabled[victim]) {
-			if(get_pcvar_num(cvar_customnvg)) remove_task(victim+TASK_NVISION)
-			else set_user_gnvision(victim, 0)
-			g_nvisionenabled[victim] = false
-		}
+		if(get_pcvar_num(g_zombie[victim] ? cvar_zm_nvggive[g_zm_special[victim]] : cvar_hm_nvggive[g_hm_special[victim]]) == 2 && g_nvision[victim] && g_nvisionenabled[victim])
+			nvision_toggle_off(victim)
 	}
 	else {
 		if(g_nvision[victim] && (g_zombie[victim] && ArrayGetCell(g_zm_special_nvision, g_zm_special[victim]-MAX_SPECIALS_ZOMBIES) == 0
 		|| !g_zombie[victim] && ArrayGetCell(g_hm_special_nvision, g_hm_special[victim]-MAX_SPECIALS_HUMANS) == 0)) {
-			if(get_pcvar_num(cvar_customnvg)) remove_task(victim+TASK_NVISION)
-			else if(g_nvisionenabled[victim]) set_user_gnvision(victim, 0)
+			nvision_toggle_off(victim)
 			g_nvision[victim] = false
-			g_nvisionenabled[victim] = false
 		}
 		if(g_nvision[victim] && g_nvisionenabled[victim] && (g_zombie[victim] && ArrayGetCell(g_zm_special_nvision, g_zm_special[victim]-MAX_SPECIALS_ZOMBIES) == 2
-		|| !g_zombie[victim] && ArrayGetCell(g_hm_special_nvision, g_hm_special[victim]-MAX_SPECIALS_HUMANS) == 2)) {
-			if(get_pcvar_num(cvar_customnvg)) remove_task(victim+TASK_NVISION)
-			else set_user_gnvision(victim, 0)
-			g_nvisionenabled[victim] = false
-		}
+		|| !g_zombie[victim] && ArrayGetCell(g_hm_special_nvision, g_hm_special[victim]-MAX_SPECIALS_HUMANS) == 2))
+			nvision_toggle_off(victim)
 	}
 	if(g_cached_customflash) { // Turn off custom flashlight when killed
 		g_flashlight[victim] = false	// Turn it off
@@ -2813,7 +2803,7 @@ public fw_EmitSound(id, channel, const sample[], Float:volume, Float:attn, flags
 		return FMRES_SUPERCEDE;
 	}
 
-	if(sample[8] == 'k' && sample[9] == 'n' && sample[10] == 'i') { // Zombie attacks with knife
+	if(sample[8] == 'k' && sample[9] == 'n' && sample[10] == 'i' && sample[14] != 'd') { // Zombie attacks with knife
 		if(sample[14] == 's' && sample[15] == 'l' && sample[16] == 'a') // slash
 			ArrayGetString(ar_sound[3], random_num(0, ArraySize(ar_sound[3]) - 1), sound, charsmax(sound))
 
@@ -3166,15 +3156,12 @@ public fw_PlayerPreThink(id) { // Forward Player PreThink
 =================================================================================*/
 public clcmd_nightvision(id) { // Nightvision toggle
 	if(g_nvision[id]) {
-		g_nvisionenabled[id] = !(g_nvisionenabled[id]) // Enable-disable
-		if(get_pcvar_num(cvar_customnvg)) { // Custom nvg?
-			remove_task(id+TASK_NVISION)
-			if(g_nvisionenabled[id]) set_task(0.1, "set_user_nvision", id+TASK_NVISION, _, _, "b")
-		}
-		else set_user_gnvision(id, g_nvisionenabled[id])
+		g_nvisionenabled[id] = !(g_nvisionenabled[id]) 
+		user_nightvision(id, g_nvisionenabled[id])
 	}
 	return PLUGIN_HANDLED;
 }
+
 public clcmd_drop(id) { // Survivor/Sniper/Berserker/Wesker/Spy should stick with its weapon
 	if(g_hm_special[id] > 0) return PLUGIN_HANDLED
 
@@ -4270,6 +4257,12 @@ buy_extra_item(id, itemid, ignorecost = 0) { // Buy Extra Item
 		zp_colored_print(id, 1, "%L", id, "CMD_HAVE_ITEM")
 		return;
 	}
+
+	if(itemid == EXTRA_MADNESS && g_madness_used[id] && get_pcvar_float(cvar_madness_use_countdown) > 0.0) {
+		zp_colored_print(id, 1, "%L", id, "CMD_WAIT_USE")
+		return;
+	}
+
 	if(!ignorecost) { // Ignore item's cost?
 		// Check that we have enough ammo packs
 		if(g_ammopacks[id] < ArrayGetCell(g_extraitem_cost, itemid)) {
@@ -4297,11 +4290,7 @@ buy_extra_item(id, itemid, ignorecost = 0) { // Buy Extra Item
 			g_nvision[id] = true
 			if(!g_isbot[id]) {
 				g_nvisionenabled[id] = true
-				if(get_pcvar_num(cvar_customnvg)) { // Custom nvg?
-					remove_task(id+TASK_NVISION)
-					set_task(0.1, "set_user_nvision", id+TASK_NVISION, _, _, "b")
-				}
-				else set_user_gnvision(id, 1)
+				user_nightvision(id, 1)
 			}
 			else cs_set_user_nvg(id, 1)
 		}
@@ -4312,6 +4301,7 @@ buy_extra_item(id, itemid, ignorecost = 0) { // Buy Extra Item
 		case EXTRA_MADNESS: { // Zombie Madness
 			g_madnesscounter++ // Increase madness purchase count for this round
 			g_nodamage[id] = true
+			g_madness_used[id] = true
 			set_task(0.1, "zombie_aura", id+TASK_AURA, _, _, "b")
 			set_task(get_pcvar_float(cvar_madnessduration), "madness_over", id+TASK_BLOOD)
 			set_pev(id, pev_takedamage, DAMAGE_NO)
@@ -6187,40 +6177,29 @@ zombieme(id, infector, classid, silentmode, rewards) {
 	
 	if(cs_get_user_nvg(id)) { // Remove CS nightvision if player owns one (bugfix)
 		cs_set_user_nvg(id, 0)
-		if(get_pcvar_num(cvar_customnvg)) remove_task(id+TASK_NVISION)
-		else if(g_nvisionenabled[id]) set_user_gnvision(id, 0)
+		nvision_toggle_off(id)
 	}
 
 	static enable; enable = 0 // Give Zombies Night Vision?
 	if(classid >= MAX_SPECIALS_ZOMBIES) enable = ArrayGetCell(g_zm_special_nvision, classid-MAX_SPECIALS_ZOMBIES)
 	else enable = get_pcvar_num(cvar_zm_nvggive[classid])
-
+	
 	if(enable) {
 		g_nvision[id] = true
 		if(!g_isbot[id]) {
 			if(enable == 1) { // Turn on Night Vision automatically?
 				g_nvisionenabled[id] = true
-				if(get_pcvar_num(cvar_customnvg)) { // Custom nvg?
-					remove_task(id+TASK_NVISION)
-					set_task(0.1, "set_user_nvision", id+TASK_NVISION, _, _, "b")
-				}
-				else set_user_gnvision(id, 1)
+				user_nightvision(id, 1)
 			}
-			else if(g_nvisionenabled[id]) { // Turn off nightvision when infected (bugfix)
-				if(get_pcvar_num(cvar_customnvg)) remove_task(id+TASK_NVISION)
-				else set_user_gnvision(id, 0)
-				g_nvisionenabled[id] = false
-			}
+			else nvision_toggle_off(id)
 		}
 		else cs_set_user_nvg(id, 1); // turn on NVG for bots
 	}
-	else if(g_nvision[id]) { // Disable nightvision when infected (bugfix)
-		if(g_isbot[id]) cs_set_user_nvg(id, 0) // Turn off NVG for bots
-		if(get_pcvar_num(cvar_customnvg)) remove_task(id+TASK_NVISION)
-		else if(g_nvisionenabled[id]) set_user_gnvision(id, 0)
+	else if(g_nvision[id]) { // Disable nightvision when turning into human/survivor (bugfix)
+		nvision_toggle_off(id)
 		g_nvision[id] = false
-		g_nvisionenabled[id] = false
 	}
+
 	if(get_pcvar_num(cvar_zombiefov) != 90 && get_pcvar_num(cvar_zombiefov) != 0) { // Set custom FOV?
 		message_begin(MSG_ONE, g_msgSetFOV, _, id)
 		write_byte(get_pcvar_num(cvar_zombiefov)) // fov angle
@@ -6281,8 +6260,7 @@ humanme(id, classid, silentmode) { // Function Human Me (player id, turn into a 
 
 	if(cs_get_user_nvg(id)) { // Remove CS nightvision if player owns one (bugfix)
 		cs_set_user_nvg(id, 0)
-		if(get_pcvar_num(cvar_customnvg)) remove_task(id+TASK_NVISION)
-		else if(g_nvisionenabled[id]) set_user_gnvision(id, 0)
+		nvision_toggle_off(id)
 	}
 
 	drop_weapons(id, 1) // Drop previous weapons
@@ -6418,25 +6396,15 @@ humanme(id, classid, silentmode) { // Function Human Me (player id, turn into a 
 		if(!g_isbot[id]) {
 			if(enable == 1) { // Turn on Night Vision automatically?
 				g_nvisionenabled[id] = true
-				if(get_pcvar_num(cvar_customnvg)) { // Custom nvg?
-					remove_task(id+TASK_NVISION)
-					set_task(0.1, "set_user_nvision", id+TASK_NVISION, _, _, "b")
-				}
-				else set_user_gnvision(id, 1)
+				user_nightvision(id, 1)
 			}
-			else if(g_nvisionenabled[id]) { // Turn off nightvision when infected
-				if(get_pcvar_num(cvar_customnvg)) remove_task(id+TASK_NVISION)
-				else set_user_gnvision(id, 0)
-				g_nvisionenabled[id] = false
-			}
+			else nvision_toggle_off(id)
 		}
 		else cs_set_user_nvg(id, 1); // turn on NVG for bots
 	}
 	else if(g_nvision[id]) { // Disable nightvision when turning into human/survivor (bugfix)
-		if(get_pcvar_num(cvar_customnvg)) remove_task(id+TASK_NVISION)
-		else if(g_nvisionenabled[id]) set_user_gnvision(id, 0)
+		nvision_toggle_off(id)
 		g_nvision[id] = false
-		g_nvisionenabled[id] = false
 	}
 
 	reset_user_rendering(id) // Reset user Rendering
@@ -6619,7 +6587,9 @@ load_customization_from_files() {
 	new const ar_sounds_str[MAX_ARRAY_SOUNDS][] = { "ZOMBIE INFECT", "ZOMBIE DIE", "ZOMBIE FALL", "ZOMBIE MISS SLASH", "ZOMBIE MISS WALL", "ZOMBIE HIT NORMAL", "ZOMBIE HIT STAB",
 	"ZOMBIE IDLE", "ZOMBIE IDLE LAST", "ZOMBIE MADNESS", "GRENADE INFECT EXPLODE", "GRENADE INFECT PLAYER", "GRENADE FIRE EXPLODE", "GRENADE FIRE PLAYER", "GRENADE FROST EXPLODE",
 	"GRENADE FROST PLAYER", "GRENADE FROST BREAK", "GRENADE FLARE", "ANTIDOTE", "THUNDER" }
-	for(i = 0; i < MAX_ARRAY_SOUNDS; i++) amx_load_setting_string_arr(ZP_CUSTOMIZATION_FILE, "Sounds", ar_sounds_str[i], ar_sound[i])
+	
+	for(i = 0; i < MAX_ARRAY_SOUNDS; i++) 
+		amx_load_setting_string_arr(ZP_CUSTOMIZATION_FILE, "Sounds", ar_sounds_str[i], ar_sound[i])
 
 	for(i = 0; i < MAX_SPECIALS_ZOMBIES; i++) {
 		if(i == 0) { // Backwards Compat
@@ -7238,8 +7208,11 @@ public respawn_player_check_task(taskid) { // Respawn Player Check Task (if kill
 }
 public respawn_player_task(taskid) { // Respawn Player Task
 	static team; team = fm_cs_get_user_team(ID_SPAWN) // Get player's team
+
+	if(team == FM_CS_TEAM_SPECTATOR || team == FM_CS_TEAM_UNASSIGNED)
+		return;
 		
-	if((!g_endround && team != FM_CS_TEAM_SPECTATOR && team != FM_CS_TEAM_UNASSIGNED && !g_isalive[ID_SPAWN]) && (!(g_currentmode > MODE_LNJ) || (g_deathmatchmode > 0))) {
+	if((!g_endround && !g_isalive[ID_SPAWN]) && (!(g_currentmode > MODE_LNJ) || (g_deathmatchmode > 0))) {
 		// Infection rounds = none of the above
 		if(g_currentmode == MODE_NONE) {
 			g_respawn_as_zombie[ID_SPAWN] = false
@@ -7338,12 +7311,16 @@ public lighting_effects() { // Lighting Effects Task
 			set_task(thunder, "thunderclap", TASK_THUNDER_PRE)
 		}
 
-		if(!thunderclap_in_progress) engfunc(EngFunc_LightStyle, 0, lighting) // Set lighting only when no thunderclaps are going on
+		if(!thunderclap_in_progress) {
+			//engfunc(EngFunc_LightStyle, 0, lighting) // Set lighting only when no thunderclaps are going on
+			set_all_light(lighting)
+		}
 	}
 	else {
 		remove_task(TASK_THUNDER_PRE) // Remove thunderclap tasks
 		remove_task(TASK_THUNDER)
-		engfunc(EngFunc_LightStyle, 0, lighting)  // Set lighting
+		set_all_light(lighting)
+		//engfunc(EngFunc_LightStyle, 0, lighting)  // Set lighting
 	}
 }
 public thunderclap() { // Thunderclap task
@@ -7356,7 +7333,8 @@ public thunderclap() { // Thunderclap task
 	// Set lighting
 	static light[2]
 	light[0] = g_lights_cycle[g_lights_i]
-	engfunc(EngFunc_LightStyle, 0, light)
+	//engfunc(EngFunc_LightStyle, 0, light)
+	set_all_light(light)
 
 	g_lights_i++
 
@@ -7745,6 +7723,7 @@ reset_vars(id, resetall) { // Reset Player Vars
 	g_canbuy[id] = 2
 	g_burning_dur[id] = 0
 	g_user_custom_speed[id] = false
+	g_madness_used[id] = false
 
 	if(resetall) {
 		g_ammopacks[id] = get_pcvar_num(cvar_startammopacks)
@@ -7772,15 +7751,11 @@ public spec_nvision(id) { // Set spectators nightvision
 
 		if(get_pcvar_num(cvar_spec_nvggive) == 1) { // Turn on Night Vision automatically?
 			g_nvisionenabled[id] = true
-
-			if(get_pcvar_num(cvar_customnvg)) { // Custom nvg?
-				remove_task(id+TASK_NVISION)
-				set_task(0.1, "set_user_nvision", id+TASK_NVISION, _, _, "b")
-			}
-			else set_user_gnvision(id, 1)
+			user_nightvision(id, 1)
 		}
 	}
 }
+
 public ShowHUD(taskid) { // Show HUD Task
 	if(!get_pcvar_num(cvar_huddisplay)) return;
 	
@@ -7862,13 +7837,24 @@ public zombie_play_idle(taskid) { // Play idle zombie sounds
 	ArrayGetString(g_lastzombie[ID_BLOOD] ? ar_sound[8] : ar_sound[7], random_num(0, ArraySize(g_lastzombie[ID_BLOOD] ? ar_sound[8] : ar_sound[7]) - 1), sound, charsmax(sound))
 	emit_sound(ID_BLOOD, CHAN_VOICE, sound, 1.0, ATTN_NORM, 0, PITCH_NORM)
 }
-public madness_over(taskid) { // Madness Over Task
+
+public madness_over(taskid) {
 	g_nodamage[ID_BLOOD] = false
 	set_pev(ID_BLOOD, pev_takedamage, DAMAGE_AIM)
+	
+	if(get_pcvar_float(cvar_madness_use_countdown) > 0.0)
+		set_task(get_pcvar_float(cvar_madness_use_countdown), "delay_madness", ID_BLOOD+TASK_MADNESS)
+	else 
+		g_madness_used[ID_BLOOD] = false
+
 	static sound[64]
 	ArrayGetString(ar_sound[9], random_num(0, ArraySize(ar_sound[9]) - 1), sound, charsmax(sound))
 	emit_sound(ID_BLOOD, CHAN_VOICE, sound, 0.0, ATTN_NORM, 0, PITCH_NORM)
 	remove_task(ID_BLOOD+TASK_BLOOD)
+}
+public delay_madness(id) {
+	id -= TASK_MADNESS
+	g_madness_used[id] = false
 }
 do_random_spawn(id, regularspawns = 0) { // Place user at a random spawn
 	static hull, sp_index, i
@@ -8807,21 +8793,14 @@ public native_set_user_nightvision(id, set) { // Native: zp_set_user_nightvision
 		
 		if(!g_isbot[id]) {
 			g_nvisionenabled[id] = (set == 1) ? true : false
-			if(get_pcvar_num(cvar_customnvg)) { // Custom nvg?
-				remove_task(id+TASK_NVISION)
-				set_task(0.1, "set_user_nvision", id+TASK_NVISION, _, _, "b")
-			}
-			else set_user_gnvision(id, 1)
+			user_nightvision(id, set)
 		}
 		else cs_set_user_nvg(id, 1)
 	}
 	else {
 		cs_set_user_nvg(id, 0) // Remove CS nightvision if player owns one (bugfix)
-
-		if(get_pcvar_num(cvar_customnvg)) remove_task(id+TASK_NVISION)
-		else if(g_nvisionenabled[id]) set_user_gnvision(id, 0)
 		g_nvision[id] = false
-		g_nvisionenabled[id] = false
+		nvision_toggle_off(id)
 	}
 	return true;
 }
@@ -11138,8 +11117,19 @@ public menu_color_handler(id, menu, item) {
 	if(equal(data, "HH:", 3)) g_hud_color[0][id] = str_to_num(data[3])-1, menu_hud_config(id)
 	else if(equal(data, "HZ:", 3)) g_hud_color[1][id] = str_to_num(data[3])-1, menu_hud_config(id)
 	else if(equal(data, "Fl:", 3)) g_flashlight_color[id] = str_to_num(data[3]), show_menu_personal(id)
-	else if(equal(data, "NH:", 3)) g_nv_color[0][id] = str_to_num(data[3]), menu_nightvision(id)
-	else if(equal(data, "NZ:", 3)) g_nv_color[1][id] = str_to_num(data[3]), menu_nightvision(id)
+	else if(equal(data, "NH:", 3)) {
+		g_nv_color[0][id] = str_to_num(data[3])
+		menu_nightvision(id)
+
+		if(g_nvisionenabled[id] && get_pcvar_num(cvar_customnvg) >= 2) 
+			set_fade_nvg(id)
+	}
+	else if(equal(data, "NZ:", 3)) {	
+		g_nv_color[1][id] = str_to_num(data[3])
+		menu_nightvision(id)
+		if(g_nvisionenabled[id] && get_pcvar_num(cvar_customnvg) >= 2) 
+			set_fade_nvg(id)
+	}
 
 	menu_destroy(menu)
 	return PLUGIN_HANDLED
@@ -11712,6 +11702,9 @@ public is_gamemode_enable(modeid)
 	if(modeid <= MODE_NONE)
 		return 0
 
+	if(modeid == MODE_INFECTION)
+		return 1;
+
 	if(modeid < MAX_GAME_MODES) // Internal Game Modes
 	{
 		if(!get_pcvar_num(cvar_mod_enable[modeid]) || get_pcvar_num(cvar_mod_enable[modeid]) == 2 && !g_escape_map || get_pcvar_num(cvar_mod_enable[modeid]) == 3 && g_escape_map)
@@ -11757,4 +11750,175 @@ precache_player_model(const modelname[]) {
 	if(file_exists(longname)) engfunc(EngFunc_PrecacheModel, longname) 
 	
 	return index
+}
+
+
+public set_player_light(id, const LightStyle[])
+{
+	if(!is_user_connected(id))
+		return
+	
+	message_begin(MSG_ONE_UNRELIABLE, SVC_LIGHTSTYLE, .player = id)
+	write_byte(0)
+	write_string(LightStyle)
+	message_end()
+}
+
+
+public set_user_fade_nvg(id, nosound)
+{
+	if (!is_user_connected(id)) 
+		return PLUGIN_HANDLED
+	
+	if(!nosound)
+		client_cmd(id, "spk items/nvg_%s.wav", g_nvisionenabled[id] ? "on" : "off")
+	
+	set_fade_nvg(id)
+	
+	return 0
+}
+
+public set_fade_nvg(id)
+{	
+	if(!g_isconnected[id]) 
+		return;
+
+	static alpha
+	if(g_nvisionenabled[id]) alpha = get_pcvar_num(cvar_nvg_alpha)
+	else alpha = 0
+	
+	message_begin(MSG_ONE_UNRELIABLE, g_msgScreenFade, _, id)
+	write_short(0) // duration
+	write_short(0) // hold time
+	write_short(0x0004) // fade type
+	
+	// Special Class / Madness / Spectator in a special round
+	if(g_zm_special[id] >= MAX_SPECIALS_ZOMBIES) {
+		write_byte(ArrayGetCell(g_zm_special_r, g_zm_special[id]-MAX_SPECIALS_ZOMBIES)) // r
+		write_byte(ArrayGetCell(g_zm_special_g, g_zm_special[id]-MAX_SPECIALS_ZOMBIES)) // g
+		write_byte(ArrayGetCell(g_zm_special_b, g_zm_special[id]-MAX_SPECIALS_ZOMBIES)) // b
+	}
+	else if(g_zm_special[id] > 0 && g_zm_special[id] < MAX_SPECIALS_ZOMBIES) {
+		write_byte(get_pcvar_num(cvar_zm_red[g_zm_special[id]])) // r
+		write_byte(get_pcvar_num(cvar_zm_green[g_zm_special[id]])) // g
+		write_byte(get_pcvar_num(cvar_zm_blue[g_zm_special[id]])) // b
+	}
+
+	// Human / Spectator in normal round
+	else if(!g_zombie[id] || !g_isalive[id]) {
+		if(g_hm_special[id] >= MAX_SPECIALS_HUMANS) {
+			write_byte(ArrayGetCell(g_hm_special_r, g_hm_special[id]-MAX_SPECIALS_HUMANS)) // r
+			write_byte(ArrayGetCell(g_hm_special_g, g_hm_special[id]-MAX_SPECIALS_HUMANS)) // g
+			write_byte(ArrayGetCell(g_hm_special_b, g_hm_special[id]-MAX_SPECIALS_HUMANS)) // b
+		}
+		else if(g_hm_special[id] > 0 && g_hm_special[id] < MAX_SPECIALS_HUMANS) {
+			write_byte(get_pcvar_num(cvar_hm_red[g_hm_special[id]])) // r
+			write_byte(get_pcvar_num(cvar_hm_green[g_hm_special[id]])) // g
+			write_byte(get_pcvar_num(cvar_hm_blue[g_hm_special[id]])) // b
+		}
+		else {		
+			switch(g_nv_color[0][id]) {
+				case 1: g_nvrgb = { 255, 255, 255 }
+				case 2: g_nvrgb = { 255, 0, 0 }
+				case 3: g_nvrgb = { 0, 255, 0 }
+				case 4: g_nvrgb = { 0, 0, 255 }
+				case 5: g_nvrgb = { 0, 255, 255 }
+				case 6: g_nvrgb = { 255, 0, 255 }
+				case 7: g_nvrgb = { 255, 255, 0 }
+				default: {
+					g_nvrgb[0] = get_pcvar_num(cvar_hm_red[0])
+					g_nvrgb[1] = get_pcvar_num(cvar_hm_green[0])
+					g_nvrgb[2] = get_pcvar_num(cvar_hm_blue[0])
+				}
+			}
+			write_byte(g_nvrgb[0]) // r
+			write_byte(g_nvrgb[1]) // g
+			write_byte(g_nvrgb[2]) // b
+		}
+	}
+	// Zombie
+	else {
+		switch(g_nv_color[1][id]) {
+			case 1: g_nvrgb = { 255, 255, 255 }
+			case 2: g_nvrgb = { 255, 0, 0 }
+			case 3: g_nvrgb = { 0, 255, 0 }
+			case 4: g_nvrgb = { 0, 0, 255 }
+			case 5: g_nvrgb = { 0, 255, 255 }
+			case 6: g_nvrgb = { 255, 0, 255 }
+			case 7: g_nvrgb = { 255, 255, 0 }
+			default: {
+				g_nvrgb[0] = get_pcvar_num(cvar_zombie_nvsion_rgb[0])
+				g_nvrgb[1] = get_pcvar_num(cvar_zombie_nvsion_rgb[1])
+				g_nvrgb[2] = get_pcvar_num(cvar_zombie_nvsion_rgb[2])
+			}
+		}
+		write_byte(g_nvrgb[0]) // r
+		write_byte(g_nvrgb[1]) // g
+		write_byte(g_nvrgb[2]) // b	
+	}
+
+	write_byte(alpha) // alpha
+	message_end()
+
+	if(g_nvisionenabled[id]) {
+		set_player_light(id, "z")
+	} 
+	else {
+		static lighting[2]
+		if(g_custom_light) formatex(lighting, charsmax(lighting), custom_lighting)	
+		else if(g_currentmode == MODE_ASSASSIN) formatex(lighting, charsmax(lighting), "a") // no lighting in assassin round
+		else get_pcvar_string(cvar_lighting, lighting, charsmax(lighting))
+		strtolower(lighting)
+		set_player_light(id, lighting)
+	}
+}
+public user_nightvision(id, enable) { // Nightvision toggle
+
+	if(g_nvg_enabled_mode[id] != get_pcvar_num(cvar_customnvg)) {
+		nvision_toggle_off(id)
+		if(enable) g_nvisionenabled[id] = true
+	}
+
+	if(g_nvision[id]) {
+		switch(get_pcvar_num(cvar_customnvg)) {
+			case 0: set_user_gnvision(id, enable)
+			case 1: {
+				remove_task(id+TASK_NVISION)
+				if(enable) set_task(0.1, "set_user_nvision", id+TASK_NVISION, _, _, "b")
+			}
+			case 2: 
+				set_user_fade_nvg(id, 0)
+			
+			default: 
+				set_user_fade_nvg(id, 0)
+		}
+		if(enable) g_nvg_enabled_mode[id] = get_pcvar_num(cvar_customnvg)
+	}
+
+	return PLUGIN_HANDLED;
+}
+public set_all_light(const lighting[]) {
+	for(new i = 1 ; i <= g_maxplayers; i++) {
+		if(!g_isconnected[i])
+			continue;
+
+		if(g_nvisionenabled[i] && get_pcvar_num(cvar_customnvg) >= 2) 
+			continue;
+
+		set_player_light(i, lighting)
+	}
+}
+public nvision_toggle_off(id) {
+	if(!g_isconnected[id])
+		return;
+
+	if(g_nvisionenabled[id]) {
+		g_nvisionenabled[id] = false
+		switch(g_nvg_enabled_mode[id]) {
+			case 0: set_user_gnvision(id, 0)
+			case 1: remove_task(id+TASK_NVISION)
+			case 2: set_user_fade_nvg(id, 0)
+			default: set_user_fade_nvg(id, 0)
+		}
+	}
 }
