@@ -224,3 +224,10 @@
 			- Added Custom Death sound for Normal/Special Zombie Classes (Now you can change in .ini files for any class)
 			- Added Pain Sounds for specific zombie class (You can change in zpsp_zombieclasses.ini)
 			- Added Native: zp_get_custom_extra_start()
+			
+		- **Beta Update 15/06/20**
+			- Fixed Not Precached Sound '0'
+			- Added Fade Nightvision Mode (Can change by cvar "zp_nvg_custom")
+			- Added Cvar: "zp_nvg_fade_alpha"
+			- Added Madness delay (After Use)
+			- Added Cvar: "zp_extra_madness_use_delay"
