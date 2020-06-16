@@ -68,6 +68,7 @@ CMD_MODE_SNIPER = start Sniper Mode
 CMD_MODE_BERSERKER = start Berserker Mode
 CMD_MODE_WESKER = start Wesker Mode
 CMD_MODE_SPY = start Spy Mode
+CMD_WAIT_USE = Wait some seconds for use this item again
 
 MOTD_ENABLED = Enabled
 MOTD_DISABLED = Disabled
@@ -298,6 +299,7 @@ CMD_MODE_SNIPER = Iniciar Modo Sniper
 CMD_MODE_BERSERKER = Iniciar Modo Berserker
 CMD_MODE_WESKER = Iniciar Modo Wesker
 CMD_MODE_SPY = Iniciar Modo Spy
+CMD_WAIT_USE = Espere mais um pouco para usar este item novamente
 
 MOTD_ENABLED = Ligado
 MOTD_DISABLED = Desligado
@@ -529,6 +531,7 @@ CMD_MODE_SNIPER = comenzar Modo Sniper
 CMD_MODE_BERSERKER = comenzar Modo Berserker
 CMD_MODE_WESKER = comenzar Modo Wesker
 CMD_MODE_SPY = comenzar Modo Espia
+CMD_WAIT_USE = Espere mais um pouco para usar este item nuevamente
 
 MOTD_ENABLED = Activado
 MOTD_DISABLED = Desactivado
@@ -759,6 +762,7 @@ CMD_MODE_SNIPER = Mesterlövész mód indítása
 CMD_MODE_BERSERKER = Berserker mód indítása
 CMD_MODE_WESKER = Wesker mód indítása
 CMD_MODE_SPY = Kém mód indítása
+CMD_WAIT_USE = Espere mais um pouco para usar este item nuevamente
 
 MOTD_ENABLED = Engedélyezve
 MOTD_DISABLED = Letiltva
