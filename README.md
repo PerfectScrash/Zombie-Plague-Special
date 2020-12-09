@@ -235,3 +235,7 @@
 			- Added Cvar: "zp_nvg_fade_alpha"
 			- Added Madness delay (After Use)
 			- Added Cvar: "zp_extra_madness_use_delay"
+			
+			- Fixing 08/12/20:
+				- Fixed Armageddon Respawn - Before peoples respawn as human and not survivor
+				- Fixed Lang from Additional Extra Weapons (Grenades/AWP/ETC.)
