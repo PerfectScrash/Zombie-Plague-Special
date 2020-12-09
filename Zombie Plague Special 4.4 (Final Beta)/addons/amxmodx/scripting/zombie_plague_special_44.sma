@@ -243,6 +243,10 @@
 			- Added Cvar: "zp_human_wpn_weight_enable"
 			- Added Lang Option for Extra Item Name, Gamemode Name, Special Class Name, Zombie Class Name/Info, Weapons/Custom Weapons Name. Just edit "zpsp_lang_itens_classes.txt"
 
+			- Fixing 08/12/20:
+				- Fixed Armageddon Respawn - Before peoples respawn as human and not survivor
+				- Fixed Lang from Additional Extra Weapons (Grenades/AWP/ETC.)
+
 
 ============================================================================================================================*/
 /*================================================================================
@@ -1135,8 +1139,10 @@ public plugin_precache() {
 	for(i = 0; i < ArraySize(g_extraweapon_names); i++) {
 		ArrayGetString(g_extraweapon_names, i, buffer, charsmax(buffer))
 
-		if(g_extraweapon_name_by_lang) 
+		if(g_extraweapon_name_by_lang) {
 			ArrayGetString(g_extraweapon_lang_key, i, buffer2, charsmax(buffer2))
+			remove_quotes(buffer2)
+		}
 		else
 			buffer2 = ""
 
@@ -2198,7 +2204,8 @@ public fw_PrecacheSound(const sound[]) { // Sound Precache Forward
 }
 
 public fw_PlayerSpawn_Post(id) { // Ham Player Spawn Post Forward
-	if(!is_user_alive(id) || !fm_cs_get_user_team(id)) return;
+	if(!is_user_alive(id) || !fm_cs_get_user_team(id) || !is_user_valid_connected(id)) 
+		return HAM_IGNORED;
 
 	g_isalive[id] = true // Player spawned
 
@@ -2228,14 +2235,11 @@ public fw_PlayerSpawn_Post(id) { // Ham Player Spawn Post Forward
 		}
 		else {
 			reset_vars(id, 0) // Reset player vars
-			if(g_currentmode == MODE_LNJ && get_pcvar_num(cvar_lnjrespsurv)) { // Respawn as a survivor on LNJ round ?
-				humanme(id, SURVIVOR, 0) // Make him survivor right away			
-				fm_set_user_health(id, floatround(float(pev(id, pev_health)) * get_pcvar_float(cvar_lnjsurvhpmulti))) // Apply the survivor health multiplier
-			}
 		}
+
 		if(g_zombie[id]) { // Execute our player spawn post forward
 			ExecuteForward(g_forwards[PLAYER_SPAWN_POST], g_fwDummyResult, id);
-			return;
+			return HAM_IGNORED;
 		}
 	}
 
@@ -2300,6 +2304,11 @@ public fw_PlayerSpawn_Post(id) { // Ham Player Spawn Post Forward
 
 	turn_off_flashlight(id) // Turn off his flashlight (prevents double flashlight bug/exploit)
 	if(g_cached_customflash) set_task(1.0, "flashlight_charge", id+TASK_CHARGE, _, _, "b") // Set the flashlight charge task to update battery status
+
+	if(g_currentmode == MODE_LNJ && get_pcvar_num(cvar_lnjrespsurv)) { // Respawn as a survivor on LNJ round ?
+		humanme(id, SURVIVOR, 0) // Make him survivor right away			
+		fm_set_user_health(id, floatround(float(pev(id, pev_health)) * get_pcvar_float(cvar_lnjsurvhpmulti))) // Apply the survivor health multiplier
+	}
 	
 	// Replace weapon models (bugfix)
 	static weapon_ent; weapon_ent = fm_cs_get_current_weapon_ent(id)
@@ -2307,6 +2316,8 @@ public fw_PlayerSpawn_Post(id) { // Ham Player Spawn Post Forward
 
 	fnCheckLastZombie() // Last Zombie Check
 	ExecuteForward(g_forwards[PLAYER_SPAWN_POST], g_fwDummyResult, id); // Execute our player spawn post forward
+
+	return HAM_IGNORED;
 }
 public fw_PlayerKilled(victim, attacker, shouldgib) { // Ham Player Killed Forward
 	g_isalive[victim] = false // Player killed
