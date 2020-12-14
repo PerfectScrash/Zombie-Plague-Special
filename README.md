@@ -236,6 +236,12 @@
 			- Added Madness delay (After Use)
 			- Added Cvar: "zp_extra_madness_use_delay"
 			
+		- Beta Update: 05/12/20 (Final Beta - If dont have bugs consider Official 4.4 version)
+			- Fixed Bug when joins spec before round begins
+			- Added Human Speed by Weapon Weight (Weapon Speed Multi - You can change in zombie_plague_special.ini) [Only For Normal Humans]
+			- Added Cvar: "zp_human_wpn_weight_enable"
+			- Added Lang Option for Extra Item Name, Gamemode Name, Special Class Name, Zombie Class Name/Info, Weapons/Custom Weapons Name. Just edit "zpsp_lang_itens_classes.txt"
+			
 			- Fixing 08/12/20:
 				- Fixed Armageddon Respawn - Before peoples respawn as human and not survivor
 				- Fixed Lang from Additional Extra Weapons (Grenades/AWP/ETC.)
